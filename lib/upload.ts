@@ -6,8 +6,10 @@ export async function uploadFile(file: File): Promise<string> {
   // If BLOB_READ_WRITE_TOKEN is set, use Vercel Blob
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
+      const cleanToken = process.env.BLOB_READ_WRITE_TOKEN.replace(/['"]/g, "");
       const blob = await put(file.name, file, {
         access: "public",
+        token: cleanToken,
       });
       return blob.url;
     } catch (e) {
