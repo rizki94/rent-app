@@ -30,31 +30,39 @@ const faqs = [
 
 export default function FAQSection() {
   return (
-    <section id="faq" className="py-16 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="py-20 bg-slate-50 relative overflow-hidden">
+      {/* Decorative side accent blur */}
+      <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-500/5 blur-[90px] pointer-events-none" />
+ 
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section header */}
-        <div className="text-center mb-10">
-          <h2 className="text-5xl font-black italic text-[#2d3e8c] mb-3">
-            FAQ
+        <div className="text-center mb-16 select-none">
+          <div className="inline-flex items-center gap-1.5 bg-[#2d3e8c]/5 border border-[#2d3e8c]/10 px-4.5 py-2 rounded-full mb-4">
+            <span className="text-[#2d3e8c] font-black text-xs sm:text-sm uppercase tracking-widest">
+              Tanya Jawab
+            </span>
+          </div>
+          <h2 className="text-5xl sm:text-6xl font-black italic text-[#2d3e8c] mb-4 tracking-tight">
+            Frequently Asked Questions
           </h2>
-          <div className="w-16 h-1 bg-[#2d3e8c] mx-auto mb-4" />
-          <p className="text-gray-500 text-lg sm:text-xl">
-            Pertanyaan Yang Sering Diajukan
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-[#2d3e8c] mx-auto mb-4" />
+          <p className="text-gray-500 text-lg sm:text-xl max-w-2xl mx-auto">
+            Punya pertanyaan mengenai sewa mobil? Temukan jawabannya di bawah ini.
           </p>
         </div>
-
-        {/* Accordion */}
-        <Accordion type="single" collapsible className="w-full space-y-0">
+ 
+        {/* Accordion list with card layouts */}
+        <Accordion type="single" collapsible className="w-full space-y-4">
           {faqs.map((faq, index) => (
             <AccordionItem
               key={index}
               value={`faq-${index}`}
-              className="border-b border-gray-200 last:border-b"
+              className="bg-white border border-slate-100 rounded-2xl px-6 shadow-sm hover:border-[#2d3e8c]/20 hover:shadow-md transition-all duration-300"
             >
-              <AccordionTrigger className="text-left text-[#2d3e8c] font-bold text-lg sm:text-xl py-5 hover:no-underline hover:text-[#1e2d6e] [&>svg]:text-[#2d3e8c] [&>svg]:w-6 [&>svg]:h-6">
+              <AccordionTrigger className="text-left text-gray-900 hover:text-[#2d3e8c] font-black text-lg sm:text-xl py-5 hover:no-underline [&>svg]:text-[#2d3e8c] [&>svg]:w-5 [&>svg]:h-5 [&>svg]:transition-transform [&>svg]:duration-200">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-gray-600 text-base sm:text-lg leading-relaxed pb-5">
+              <AccordionContent className="text-gray-500 text-base sm:text-lg leading-relaxed pb-5 pt-1 border-t border-slate-50 mt-1">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

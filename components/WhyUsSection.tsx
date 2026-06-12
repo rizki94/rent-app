@@ -47,28 +47,38 @@ interface WhyUsSectionProps {
   initialTestimonials?: TestimonialType[];
 }
 
-export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps) {
+export default function WhyUsSection({
+  initialTestimonials,
+}: WhyUsSectionProps) {
   const [page, setPage] = useState(0);
-  const testimonials = initialTestimonials && initialTestimonials.length > 0 ? initialTestimonials : defaultTestimonials;
+  const testimonials =
+    initialTestimonials && initialTestimonials.length > 0
+      ? initialTestimonials
+      : defaultTestimonials;
 
   const perPage = 3;
   const totalPages = Math.ceil(testimonials.length / perPage);
   const visible = testimonials.slice(page * perPage, page * perPage + perPage);
 
   return (
-    <section id="testimoni" className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="testimoni" className="py-20 bg-white relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="text-center mb-10">
-          <h2 className="text-5xl font-black italic text-[#2d3e8c] mb-3">
-            Kata Mereka
+        <div className="text-center mb-16 select-none">
+          <div className="inline-flex items-center gap-1.5 bg-[#2d3e8c]/5 border border-[#2d3e8c]/10 px-4.5 py-2 rounded-full mb-4">
+            <span className="text-[#2d3e8c] font-black text-xs sm:text-sm uppercase tracking-widest">
+              Ulasan Pelanggan
+            </span>
+          </div>
+          <h2 className="text-5xl sm:text-6xl font-black italic text-[#2d3e8c] mb-4 tracking-tight">
+            Apa Kata Mereka?
           </h2>
-          <div className="w-20 h-1 bg-[#2d3e8c] mx-auto mb-4" />
-          <p className="text-gray-500 text-lg sm:text-xl">
-            Beberapa Testimoni dari Google Maps dan Website
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-[#2d3e8c] mx-auto mb-4" />
+          <p className="text-gray-500 text-lg sm:text-xl max-w-3xl mx-auto">
+            Dengarkan pengalaman nyata dari pelanggan setia kami yang telah menggunakan jasa sewa mobil Adhitama89.
           </p>
         </div>
-
+ 
         {/* Carousel */}
         <div className="relative flex items-center gap-4">
           {/* Prev */}
@@ -76,58 +86,72 @@ export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps)
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={page === 0}
             aria-label="Previous testimonial"
-            className="shrink-0 w-10 h-10 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#2d3e8c] hover:text-[#2d3e8c] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="shrink-0 w-11 h-11 rounded-2xl border border-slate-100 bg-white shadow-sm flex items-center justify-center text-gray-600 hover:border-[#2d3e8c] hover:text-[#2d3e8c] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
           >
             <CaretLeft className="w-5 h-5" weight="bold" />
           </button>
-
+ 
           {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
             {visible.map((t, index) => (
               <div
                 key={t.name + "-" + index}
-                className="bg-[#2d3e8c] rounded-3xl px-6 py-8 flex flex-col items-center text-center justify-between"
+                className="bg-white border border-slate-100 rounded-3xl p-8 flex flex-col justify-between items-start text-left relative overflow-hidden shadow-sm hover:shadow-md transition-shadow min-h-60"
               >
-                <div className="flex flex-col items-center w-full">
-                  <h3 className="text-white font-black text-2xl mb-3">{t.name}</h3>
-                  <div className="flex gap-1 mb-5">
-                    {Array.from({ length: t.stars }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-6 h-6 text-amber-400"
-                        weight="fill"
-                      />
-                    ))}
+                {/* Decorative Giant Quote */}
+                <span className="absolute -top-4 -right-1 text-slate-100 font-serif text-[130px] leading-none pointer-events-none select-none font-bold opacity-75">
+                  &ldquo;
+                </span>
+
+                <div className="relative z-10 w-full flex flex-col justify-between h-full">
+                  <div>
+                    {/* Stars */}
+                    <div className="flex gap-0.5 mb-5">
+                      {Array.from({ length: t.stars }).map((_, i) => (
+                        <Star
+                          key={i}
+                          className="w-4.5 h-4.5 text-amber-400"
+                          weight="fill"
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Comment */}
+                    <p className="text-gray-600 text-base leading-relaxed mb-6 italic">
+                      &ldquo;{t.comment}&rdquo;
+                    </p>
                   </div>
-                  <p className="text-white/90 text-base sm:text-lg leading-relaxed italic">
-                    "{t.comment}"
-                  </p>
+
+                  {/* Customer Name */}
+                  <h3 className="text-gray-900 font-black text-lg uppercase tracking-wider mt-auto border-t border-slate-50 pt-4 w-full">
+                    {t.name}
+                  </h3>
                 </div>
               </div>
             ))}
           </div>
-
+ 
           {/* Next */}
           <button
             onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
             aria-label="Next testimonial"
-            className="shrink-0 w-10 h-10 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#2d3e8c] hover:text-[#2d3e8c] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="shrink-0 w-11 h-11 rounded-2xl border border-slate-100 bg-white shadow-sm flex items-center justify-center text-gray-600 hover:border-[#2d3e8c] hover:text-[#2d3e8c] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
           >
             <CaretRight className="w-5 h-5" weight="bold" />
           </button>
         </div>
-
+ 
         {/* Dots */}
         {totalPages > 1 && (
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-2.5 mt-10">
             {Array.from({ length: totalPages }).map((_, i) => (
               <button
                 key={i}
                 onClick={() => setPage(i)}
                 aria-label={`Testimonial page ${i + 1}`}
-                className={`h-2.5 rounded-full transition-all duration-200 ${
-                  i === page ? "bg-[#2d3e8c] w-6" : "bg-gray-300 w-2.5"
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  i === page ? "bg-[#2d3e8c] w-8 shadow-sm" : "bg-gray-300 w-2.5 hover:bg-gray-400"
                 }`}
               />
             ))}

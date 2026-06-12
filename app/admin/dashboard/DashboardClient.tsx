@@ -2,10 +2,28 @@
 
 import { useState } from "react";
 import { UserSession } from "@/lib/auth";
-import { logoutAction, updateWebConfigAction, saveCarAction, deleteCarAction, saveTestimonialAction, deleteTestimonialAction } from "@/app/actions/admin";
+import {
+  logoutAction,
+  updateWebConfigAction,
+  saveCarAction,
+  deleteCarAction,
+  saveTestimonialAction,
+  deleteTestimonialAction,
+} from "@/app/actions/admin";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Trash, Pencil, Plus, SignOut, Car, Chat, Gear, Star, UploadSimple, ArrowClockwise } from "@phosphor-icons/react";
+import {
+  Trash,
+  Pencil,
+  Plus,
+  SignOut,
+  Car,
+  Chat,
+  Gear,
+  Star,
+  UploadSimple,
+  ArrowClockwise,
+} from "@phosphor-icons/react";
 
 interface CarType {
   id: number;
@@ -45,25 +63,42 @@ interface Props {
   initialConfig: WebConfigType | null;
 }
 
-export default function DashboardClient({ session, initialCars, initialTestimonials, initialConfig }: Props) {
+export default function DashboardClient({
+  session,
+  initialCars,
+  initialTestimonials,
+  initialConfig,
+}: Props) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"cars" | "testimonials" | "config">("cars");
+  const [activeTab, setActiveTab] = useState<
+    "cars" | "testimonials" | "config"
+  >("cars");
 
   // Local States
   const [cars, setCars] = useState<CarType[]>(initialCars);
-  const [testimonials, setTestimonials] = useState<TestimonialType[]>(initialTestimonials);
+  const [testimonials, setTestimonials] =
+    useState<TestimonialType[]>(initialTestimonials);
   const [config, setConfig] = useState<WebConfigType | null>(initialConfig);
 
   // Loading & Modals
   const [submitting, setSubmitting] = useState(false);
-  const [carModal, setCarModal] = useState<{ open: boolean; car: CarType | null }>({ open: false, car: null });
-  const [testimonialModal, setTestimonialModal] = useState<{ open: boolean; testimonial: TestimonialType | null }>({ open: false, testimonial: null });
+  const [carModal, setCarModal] = useState<{
+    open: boolean;
+    car: CarType | null;
+  }>({ open: false, car: null });
+  const [testimonialModal, setTestimonialModal] = useState<{
+    open: boolean;
+    testimonial: TestimonialType | null;
+  }>({ open: false, testimonial: null });
 
   // Upload Previews
   const [carImagePreview, setCarImagePreview] = useState<string | null>(null);
 
   // Notifications
-  const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [notification, setNotification] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
 
   function notify(type: "success" | "error", message: string) {
     setNotification({ type, message });
@@ -80,7 +115,7 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
     e.preventDefault();
     setSubmitting(true);
     const formData = new FormData(e.currentTarget);
-    
+
     const res = await updateWebConfigAction(formData);
     setSubmitting(false);
 
@@ -108,7 +143,10 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
     if (res.error) {
       notify("error", res.error);
     } else {
-      notify("success", `Mobil berhasil ${carModal.car ? "diperbarui" : "ditambahkan"}!`);
+      notify(
+        "success",
+        `Mobil berhasil ${carModal.car ? "diperbarui" : "ditambahkan"}!`,
+      );
       setCarModal({ open: false, car: null });
       setCarImagePreview(null);
       // Fetch fresh data
@@ -121,7 +159,7 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
   // Car Delete
   async function handleCarDelete(id: number) {
     if (!confirm("Apakah Anda yakin ingin menghapus mobil ini?")) return;
-    
+
     const res = await deleteCarAction(id);
     if (res.error) {
       notify("error", res.error);
@@ -147,7 +185,10 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
     if (res.error) {
       notify("error", res.error);
     } else {
-      notify("success", `Testimoni berhasil ${testimonialModal.testimonial ? "diperbarui" : "ditambahkan"}!`);
+      notify(
+        "success",
+        `Testimoni berhasil ${testimonialModal.testimonial ? "diperbarui" : "ditambahkan"}!`,
+      );
       setTestimonialModal({ open: false, testimonial: null });
       router.refresh();
       setTimeout(() => window.location.reload(), 100);
@@ -157,7 +198,7 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
   // Testimonial Delete
   async function handleTestimonialDelete(id: number) {
     if (!confirm("Apakah Anda yakin ingin menghapus testimoni ini?")) return;
-    
+
     const res = await deleteTestimonialAction(id);
     if (res.error) {
       notify("error", res.error);
@@ -263,7 +304,9 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
                 <h2 className="text-2xl font-black text-[#1a2b5e] uppercase tracking-wide">
                   Daftar Armada
                 </h2>
-                <p className="text-gray-500 text-sm">Kelola unit mobil sewa Anda</p>
+                <p className="text-gray-500 text-sm">
+                  Kelola unit mobil sewa Anda
+                </p>
               </div>
               <button
                 onClick={() => {
@@ -279,14 +322,22 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
 
             {cars.length === 0 ? (
               <div className="bg-white border border-gray-100 rounded-3xl p-12 text-center text-gray-400">
-                <Car className="w-16 h-16 mx-auto mb-4 text-gray-300" weight="light" />
+                <Car
+                  className="w-16 h-16 mx-auto mb-4 text-gray-300"
+                  weight="light"
+                />
                 <p className="text-lg font-bold">Belum ada mobil</p>
-                <p className="text-sm">Klik tombol "Tambah Mobil" di atas untuk menambahkan armada.</p>
+                <p className="text-sm">
+                  Klik tombol "Tambah Mobil" di atas untuk menambahkan armada.
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {cars.map((car) => (
-                  <div key={car.id} className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                  <div
+                    key={car.id}
+                    className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col"
+                  >
                     <div className="relative w-full h-48 bg-gray-100 flex items-center justify-center p-4">
                       <Image
                         src={car.image}
@@ -297,10 +348,20 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
                     </div>
                     <div className="p-6 flex-1 flex flex-col justify-between">
                       <div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-1">{car.name}</h3>
-                        <p className="text-sm text-gray-500 mb-3">Jumlah Unit: <span className="font-bold text-gray-900">{car.qty}</span></p>
+                        <h3 className="text-lg font-bold text-gray-900 mb-1">
+                          {car.name}
+                        </h3>
+                        <p className="text-sm text-gray-500 mb-3">
+                          Jumlah Unit:{" "}
+                          <span className="font-bold text-gray-900">
+                            {car.qty}
+                          </span>
+                        </p>
                         <div className="bg-blue-50/50 rounded-xl px-4 py-2 text-sm text-[#2d3e8c] font-black inline-block">
-                          Rp {car.price} <span className="font-normal text-xs text-gray-500">/ {car.pricePer}</span>
+                          Rp {car.price}{" "}
+                          <span className="font-normal text-xs text-gray-500">
+                            / {car.pricePer}
+                          </span>
                         </div>
                       </div>
 
@@ -339,10 +400,14 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
                 <h2 className="text-2xl font-black text-[#1a2b5e] uppercase tracking-wide">
                   Daftar Testimoni
                 </h2>
-                <p className="text-gray-500 text-sm">Kelola ulasan kepuasan pelanggan</p>
+                <p className="text-gray-500 text-sm">
+                  Kelola ulasan kepuasan pelanggan
+                </p>
               </div>
               <button
-                onClick={() => setTestimonialModal({ open: true, testimonial: null })}
+                onClick={() =>
+                  setTestimonialModal({ open: true, testimonial: null })
+                }
                 className="bg-[#2d3e8c] hover:bg-[#1e2d6e] text-white font-bold text-sm uppercase tracking-wider px-5 py-3 rounded-xl flex items-center gap-2 transition-colors cursor-pointer shadow-md"
               >
                 <Plus className="w-4 h-4" weight="bold" />
@@ -352,17 +417,28 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
 
             {testimonials.length === 0 ? (
               <div className="bg-white border border-gray-100 rounded-3xl p-12 text-center text-gray-400">
-                <Chat className="w-16 h-16 mx-auto mb-4 text-gray-300" weight="light" />
+                <Chat
+                  className="w-16 h-16 mx-auto mb-4 text-gray-300"
+                  weight="light"
+                />
                 <p className="text-lg font-bold">Belum ada testimoni</p>
-                <p className="text-sm">Klik tombol "Tambah Testimoni" di atas untuk menambahkan ulasan baru.</p>
+                <p className="text-sm">
+                  Klik tombol "Tambah Testimoni" di atas untuk menambahkan
+                  ulasan baru.
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {testimonials.map((testimonial) => (
-                  <div key={testimonial.id} className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                  <div
+                    key={testimonial.id}
+                    className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+                  >
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <h3 className="font-bold text-gray-950 text-base">{testimonial.name}</h3>
+                        <h3 className="font-bold text-gray-950 text-base">
+                          {testimonial.name}
+                        </h3>
                         <div className="flex gap-0.5">
                           {Array.from({ length: 5 }).map((_, i) => (
                             <Star
@@ -380,7 +456,9 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
 
                     <div className="flex items-center justify-end gap-2 border-t border-gray-50 pt-4 mt-6">
                       <button
-                        onClick={() => setTestimonialModal({ open: true, testimonial })}
+                        onClick={() =>
+                          setTestimonialModal({ open: true, testimonial })
+                        }
                         className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer"
                       >
                         <Pencil className="w-3.5 h-3.5" />
@@ -406,10 +484,15 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
             <h2 className="text-2xl font-black text-[#1a2b5e] uppercase tracking-wide mb-2">
               Konfigurasi Website
             </h2>
-            <p className="text-gray-500 text-sm mb-8">Informasi kontak, sosial media, dan alamat yang akan ditampilkan di website.</p>
+            <p className="text-gray-500 text-sm mb-8">
+              Informasi kontak, sosial media, dan alamat yang akan ditampilkan
+              di website.
+            </p>
 
             <form onSubmit={handleConfigSubmit} className="space-y-6">
-              {config?.id && <input type="hidden" name="id" value={config.id} />}
+              {config?.id && (
+                <input type="hidden" name="id" value={config.id} />
+              )}
 
               <div>
                 <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
@@ -485,7 +568,9 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
                 disabled={submitting}
                 className="bg-[#2d3e8c] hover:bg-[#1e2d6e] disabled:bg-gray-400 text-white font-black text-sm uppercase tracking-widest px-8 py-3.5 rounded-xl transition-colors cursor-pointer shadow-md flex items-center justify-center gap-2"
               >
-                {submitting && <ArrowClockwise className="animate-spin w-4 h-4" />}
+                {submitting && (
+                  <ArrowClockwise className="animate-spin w-4 h-4" />
+                )}
                 {submitting ? "Menyimpan..." : "Simpan Konfigurasi"}
               </button>
             </form>
@@ -580,7 +665,9 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
                   ) : (
                     <div className="text-center py-4 text-gray-400">
                       <UploadSimple className="w-10 h-10 mx-auto mb-2 text-gray-300" />
-                      <p className="text-xs font-bold uppercase tracking-wide">Pilih File Gambar</p>
+                      <p className="text-xs font-bold uppercase tracking-wide">
+                        Pilih File Gambar
+                      </p>
                       <p className="text-[10px]">PNG, JPG, WEBP maks. 4MB</p>
                     </div>
                   )}
@@ -595,7 +682,7 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
                         setCarImagePreview(URL.createObjectURL(file));
                       }
                     }}
-                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
                   />
                 </div>
               </div>
@@ -629,7 +716,9 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 animate-in fade-in zoom-in-95 duration-200">
             <h3 className="text-xl font-black text-[#1a2b5e] uppercase tracking-wide mb-6">
-              {testimonialModal.testimonial ? "Edit Ulasan Testimoni" : "Tambah Testimoni Baru"}
+              {testimonialModal.testimonial
+                ? "Edit Ulasan Testimoni"
+                : "Tambah Testimoni Baru"}
             </h3>
 
             <form onSubmit={handleTestimonialSubmit} className="space-y-5">
@@ -688,7 +777,9 @@ export default function DashboardClient({ session, initialCars, initialTestimoni
                 </button>
                 <button
                   type="button"
-                  onClick={() => setTestimonialModal({ open: false, testimonial: null })}
+                  onClick={() =>
+                    setTestimonialModal({ open: false, testimonial: null })
+                  }
                   className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm uppercase tracking-wider px-6 py-3 rounded-xl transition-colors cursor-pointer"
                 >
                   Batal

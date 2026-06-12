@@ -122,7 +122,9 @@ export async function saveCarAction(formData: FormData) {
   try {
     // If a new image file is uploaded, process it
     if (imageFile && imageFile.size > 0 && imageFile.name !== "undefined") {
+      console.log("DEBUG: Uploading new file...");
       imageUrl = await uploadFile(imageFile);
+      console.log("DEBUG: Uploaded file URL:", imageUrl);
     }
 
     if (!imageUrl) {
