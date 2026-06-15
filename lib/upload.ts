@@ -3,11 +3,14 @@ import fs from "fs/promises";
 import path from "path";
 
 export async function uploadFile(file: File): Promise<string> {
+  const ext = path.extname(file.name) || ".png";
+  const uniqueName = `car_${Date.now()}_${Math.random().toString(36).substring(2, 8)}${ext}`;
+
   // If BLOB_READ_WRITE_TOKEN is set, use Vercel Blob
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
       const cleanToken = process.env.BLOB_READ_WRITE_TOKEN.replace(/['"]/g, "");
-      const blob = await put(file.name, file, {
+      const blob = await put(uniqueName, file, {
         access: "public",
         token: cleanToken,
         addRandomSuffix: true
@@ -26,7 +29,6 @@ export async function uploadFile(file: File): Promise<string> {
   // Ensure the directory exists
   await fs.mkdir(uploadDir, { recursive: true });
 
-  const uniqueName = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
   const filePath = path.join(uploadDir, uniqueName);
   
   await fs.writeFile(filePath, buffer);

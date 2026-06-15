@@ -12,7 +12,20 @@ const faqs = [
   {
     question: "Syarat sewa kendaraan apa saja?",
     answer:
-      "KTP asli, SIM A yang masih berlaku, dan deposit sesuai jenis kendaraan. Untuk sewa dengan driver tidak diperlukan SIM. Pembayaran dapat dilakukan tunai maupun transfer bank.",
+      `Dokumen wajib:
+• SIM A yang masih berlaku
+• KTP / ID Card
+• Kartu Keluarga (KK)
+
+Dokumen pendukung (jika memiliki):
+• NPWP
+• KTA
+• ID Kepegawaian
+• Bukti booking hotel (untuk penyewa dari luar kota)
+
+Untuk penyewa berdomisili Bandung, diwajibkan memberikan jaminan berupa sepeda motor atau deposit. Alternatif jaminan lainnya dapat disesuaikan berdasarkan kesepakatan bersama.
+
+Pihak rental berhak meminta dokumen atau jaminan tambahan sesuai hasil verifikasi data dan wilayah penggunaan kendaraan.`,
   },
   {
     question: "Apa bisa antar jemput?",
@@ -99,11 +112,11 @@ export default function FAQSection() {
                     </span>
                   </button>
                   <div
-                    className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${
-                      isOpen ? "max-h-64 pb-6 opacity-100" : "max-h-0 opacity-0"
+                    className={`px-6 overflow-hidden transition-all duration-500 ease-in-out ${
+                      isOpen ? "max-h-[500px] pb-6 opacity-100" : "max-h-0 opacity-0"
                     }`}
                   >
-                    <p className="text-gray-500 text-[14px] leading-relaxed border-t border-gray-100 pt-4">
+                    <p className="whitespace-pre-line text-gray-500 text-[14px] leading-relaxed border-t border-gray-100 pt-4">
                       {faq.answer}
                     </p>
                   </div>

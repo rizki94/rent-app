@@ -2,15 +2,22 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Tag, CaretLeft, CaretRight } from "@phosphor-icons/react";
+import {
+  Tag,
+  CaretLeft,
+  CaretRight,
+  Car,
+  ArrowRight,
+} from "@phosphor-icons/react";
 
 interface CarType {
-  id: number;
+  id: number | string;
   name: string;
   price: string;
   qty: number;
   pricePer: string;
   image: string;
+  isCTA?: boolean;
 }
 
 const defaultCars = [
@@ -64,11 +71,21 @@ function CarCard({
   car,
   phone,
 }: {
-  car: (typeof defaultCars)[0] & Partial<CarType>;
+  car: {
+    id: number | string;
+    name: string;
+    image: string;
+    price: string;
+    pricePer: string;
+    qty: number;
+    category?: string;
+    seats?: number;
+    transmission?: string;
+  };
   phone: string;
 }) {
   const priceFormatted = formatPrice(car.price);
-  const category = (car as (typeof defaultCars)[0]).category;
+  const category = car.category;
 
   return (
     <article
@@ -102,10 +119,6 @@ function CarCard({
         {/* Pricing + CTA */}
         <div className="flex items-end justify-between mt-auto">
           <div>
-            <div className="flex items-center gap-1 text-gray-400 text-[12px] mb-1">
-              <Tag className="w-3 h-3" weight="bold" />
-              <span>Mulai dari</span>
-            </div>
             <div className="flex items-baseline gap-1">
               <span className="text-gray-500 text-[13px]">Rp</span>
               <span className="text-[24px] font-extrabold text-[#0A274E] leading-none">
@@ -125,6 +138,37 @@ function CarCard({
         </div>
       </div>
     </article>
+  );
+}
+
+function CTACard({ phone }: { phone: string }) {
+  return (
+    <div className="group bg-gradient-to-br from-[#0B132B] via-[#0A274E] to-[#124285] rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-white/10 p-6 text-white justify-between min-h-[380px] h-full relative">
+      {/* Decorative background glow circles */}
+      <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-amber-400/10 blur-xl group-hover:scale-125 transition-transform duration-500" />
+      
+      <div className="flex flex-col items-center justify-center text-center flex-1 py-8 z-10">
+        <div className="w-16 h-16 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center mb-6 shrink-0">
+          <Car className="w-8 h-8 text-amber-300 animate-pulse" weight="fill" />
+        </div>
+        <h3 className="text-xl font-bold text-white mb-2">
+          Ingin Unit Lain?
+        </h3>
+        <p className="text-white/75 text-xs px-2 leading-relaxed max-w-[200px]">
+          Kami memiliki berbagai armada tambahan sesuai kebutuhan perjalanan Anda di Bandung.
+        </p>
+      </div>
+
+      <a
+        href={`https://wa.me/${phone}?text=Halo%20Adhitama89!%20Saya%20ingin%20tanya%20pilihan%20unit%20mobil%20lainnya%20yang%20tersedia`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-[#0B132B] font-extrabold text-[13px] text-center shadow-[0_4px_12px_rgba(251,191,36,0.2)] transition-all flex items-center justify-center gap-2 z-10 shrink-0"
+      >
+        <span>Cek Unit Lainnya</span>
+        <ArrowRight className="w-4 h-4" weight="bold" />
+      </a>
+    </div>
   );
 }
 
@@ -157,15 +201,31 @@ export default function CarListSection({
           seats: 7,
           transmission: "Otomatis",
           category: "Rental",
+          isCTA: false,
         }))
       : defaultCars;
   const activePhone = phone || "6281234567890";
 
+  const displayedCars: (CarType & { category?: string; seats?: number; transmission?: string })[] = [
+    ...cars,
+    {
+      id: "cta-card",
+      isCTA: true,
+      name: "Ingin Unit Lain?",
+      image: "",
+      price: "",
+      qty: 0,
+      pricePer: "",
+    }
+  ];
+
   const totalPages = !isMounted
     ? 1
     : isMobile
-      ? cars.length
-      : Math.ceil(cars.length / 3);
+      ? displayedCars.length
+      : displayedCars.length <= 4
+        ? 1
+        : Math.ceil(displayedCars.length / 3);
   const activePage = Math.min(page, Math.max(0, totalPages - 1));
 
   const handlePageChange = (index: number) => {
@@ -227,10 +287,20 @@ export default function CarListSection({
         </div>
 
         {/* Desktop Grid (hidden on mobile) */}
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cars.slice(activePage * 3, activePage * 3 + 3).map((car) => (
-            <CarCard key={car.id} car={car} phone={activePhone} />
-          ))}
+        <div
+          className={`hidden sm:grid sm:grid-cols-2 ${
+            displayedCars.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
+          } gap-8`}
+        >
+          {(displayedCars.length <= 4
+            ? displayedCars
+            : displayedCars.slice(activePage * 3, activePage * 3 + 3)
+          ).map((car) => {
+            if (car.isCTA) {
+              return <CTACard key="cta" phone={activePhone} />;
+            }
+            return <CarCard key={car.id} car={car} phone={activePhone} />;
+          })}
         </div>
 
         {/* Mobile Horizontal Snap-Scroll Slider */}
@@ -239,9 +309,13 @@ export default function CarListSection({
           onScroll={handleScroll}
           className="sm:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 px-4 -mx-4 scrollbar-none scroll-smooth"
         >
-          {cars.map((car) => (
+          {displayedCars.map((car) => (
             <div key={car.id} className="w-[85vw] shrink-0 snap-center">
-              <CarCard car={car} phone={activePhone} />
+              {car.isCTA ? (
+                <CTACard phone={activePhone} />
+              ) : (
+                <CarCard car={car} phone={activePhone} />
+              )}
             </div>
           ))}
         </div>
