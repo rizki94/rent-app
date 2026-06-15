@@ -9,7 +9,7 @@ import {
   Clock,
   ArrowRight,
 } from "@phosphor-icons/react/dist/ssr";
-import Image from "next/image";
+import LogoWhite from "./logo-white";
 
 interface WebConfigType {
   address: string | null;
@@ -60,17 +60,9 @@ export default function Footer({ config }: FooterProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
             {/* Brand column */}
             <div className="lg:col-span-1">
-              <Image
-                src="/logo-white.svg"
-                alt="Adhitama89 Rental"
-                width={160}
-                height={50}
-                className="h-12 w-auto object-contain mb-5"
-                onError={(e) => {
-                  // fallback to regular logo if white version doesn't exist
-                  (e.target as HTMLImageElement).src = "/logo.svg";
-                }}
-              />
+              <div className="flex pb-5">
+                <LogoWhite />
+              </div>
               <p className="text-white/55 text-[14px] leading-relaxed mb-6">
                 Solusi transportasi terpercaya di Bandung sejak 2016. Armada
                 terawat, harga bersahabat, pelayanan 24 jam.

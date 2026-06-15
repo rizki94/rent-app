@@ -67,7 +67,10 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
               {/* Glass Card 1 */}
               <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 flex items-center gap-4 text-white shadow-lg transform lg:translate-x-[-20px] hover:translate-x-0 transition-transform duration-300 animate-float">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-400 flex items-center justify-center shrink-0">
-                  <Wrench className="w-5 h-5 sm:w-6 sm:h-6 text-slate-900" weight="bold" />
+                  <Wrench
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-slate-900"
+                    weight="bold"
+                  />
                 </div>
                 <div>
                   <h4 className="font-bold text-sm sm:text-base text-amber-300">
@@ -85,7 +88,10 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
                 style={{ animationDelay: "1.5s" }}
               >
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500 flex items-center justify-center shrink-0">
-                  <Tag className="w-5 h-5 sm:w-6 sm:h-6 text-white" weight="bold" />
+                  <Tag
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-white"
+                    weight="bold"
+                  />
                 </div>
                 <div>
                   <h4 className="font-bold text-sm sm:text-base text-blue-300">
@@ -103,7 +109,10 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
                 style={{ animationDelay: "3s" }}
               >
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500 flex items-center justify-center shrink-0">
-                  <Sparkle className="w-5 h-5 sm:w-6 sm:h-6 text-white" weight="bold" />
+                  <Sparkle
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-white"
+                    weight="bold"
+                  />
                 </div>
                 <div>
                   <h4 className="font-bold text-sm sm:text-base text-emerald-300">
@@ -129,7 +138,7 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
                 label: "Member",
                 icon: (
                   <svg
-                    className="w-6 h-6 sm:w-8 sm:h-8 text-[#0A274E]"
+                    className="w-6 h-6 sm:w-8 sm:h-8"
                     fill="currentColor"
                     viewBox="0 0 576 512"
                   >
@@ -138,11 +147,11 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
                 ),
               },
               {
-                value: "150000+",
+                value: "150K+",
                 label: "Customer",
                 icon: (
                   <svg
-                    className="w-6 h-6 sm:w-8 sm:h-8 text-[#0A274E]"
+                    className="w-6 h-6 sm:w-8 sm:h-8"
                     fill="currentColor"
                     viewBox="0 0 640 512"
                   >
@@ -155,7 +164,7 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
                 label: "Units",
                 icon: (
                   <svg
-                    className="w-6 h-6 sm:w-8 sm:h-8 text-[#0A274E]"
+                    className="w-6 h-6 sm:w-8 sm:h-8"
                     fill="currentColor"
                     viewBox="0 0 640 512"
                   >
@@ -168,7 +177,7 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
                 label: "Terpercaya",
                 icon: (
                   <svg
-                    className="w-6 h-6 sm:w-8 sm:h-8 text-[#0A274E]"
+                    className="w-6 h-6 sm:w-8 sm:h-8"
                     fill="currentColor"
                     viewBox="0 0 512 512"
                   >

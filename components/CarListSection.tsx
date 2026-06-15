@@ -82,7 +82,7 @@ function CarCard({
             {category}
           </span>
         )}
-        <div className="relative w-full h-40 px-4 transform group-hover:scale-105 transition-transform duration-500">
+        <div className="relative w-full h-64 px-4 transform group-hover:scale-105 transition-transform duration-500">
           <Image
             src={car.image}
             alt={car.name}

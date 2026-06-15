@@ -5,7 +5,7 @@ import { Plus, Minus, ChatCircle } from "@phosphor-icons/react";
 
 const faqs = [
   {
-    question: "Lokasi Adhitama89 rentcar dimana?",
+    question: "Lokasi Adhitama89 Rental dimana?",
     answer:
       "Jl. Turangga Barat Baru No.4, Lkr. Sel., Kec. Lengkong, Kota Bandung, Jawa Barat 43261. Kami juga menyediakan layanan antar-jemput ke seluruh wilayah Bandung.",
   },
@@ -22,12 +22,12 @@ const faqs = [
   {
     question: "Apakah bisa sewa lepas kunci (tanpa driver)?",
     answer:
-      "Bisa, dengan syarat memiliki SIM A yang masih berlaku dan KTP asli. Untuk wilayah tertentu mungkin diperlukan jaminan tambahan.",
+      "Bisa, dengan syarat memiliki SIM A, Foto KK, Foto Sim A, ID Card, NPWP, KTA, Foto ID Kepegawaian PNS, Fto Booking Hotel. Untuk Domisili Bandung wajib menyimpan jaminan sepeda motor atau dengan deposit menyimpan data lainnya sesuai kesepakatan bersama. Untuk wilayah tertentu mungkin diperlukan jaminan tambahan.",
   },
   {
     question: "Berapa lama minimal masa sewa?",
     answer:
-      "Minimal sewa adalah 6 jam. Kami juga menyediakan paket 12 jam dan 24 jam sesuai kebutuhan Anda. Untuk perjalanan ke luar kota, terdapat ketentuan durasi minimum tersendiri.",
+      "Kami menyediakan paket 12 jam dan 24 jam sesuai kebutuhan Anda. Untuk perjalanan ke luar kota, terdapat ketentuan durasi minimum tersendiri.",
   },
 ];
 
@@ -40,7 +40,6 @@ export default function FAQSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start">
-
           {/* Left: Header */}
           <div className="lg:col-span-2 lg:sticky lg:top-32">
             <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-amber-500 mb-4">
@@ -51,7 +50,8 @@ export default function FAQSection() {
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full mb-6" />
             <p className="text-gray-500 text-base leading-relaxed mb-8">
-              Tidak menemukan jawaban yang Anda cari? Hubungi kami langsung melalui WhatsApp.
+              Tidak menemukan jawaban yang Anda cari? Hubungi kami langsung
+              melalui WhatsApp.
             </p>
             <a
               href="#contact"
@@ -79,12 +79,18 @@ export default function FAQSection() {
                     className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none"
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                   >
-                    <span className={`font-semibold text-[15px] pr-6 transition-colors ${isOpen ? "text-[#0A274E]" : "text-gray-700"}`}>
+                    <span
+                      className={`font-semibold text-[15px] pr-6 transition-colors ${isOpen ? "text-[#0A274E]" : "text-gray-700"}`}
+                    >
                       {faq.question}
                     </span>
-                    <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-                      isOpen ? "bg-[#0A274E] text-white" : "bg-gray-100 text-gray-500"
-                    }`}>
+                    <span
+                      className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        isOpen
+                          ? "bg-[#0A274E] text-white"
+                          : "bg-gray-100 text-gray-500"
+                      }`}
+                    >
                       {isOpen ? (
                         <Minus className="w-4 h-4" weight="bold" />
                       ) : (
@@ -105,7 +111,6 @@ export default function FAQSection() {
               );
             })}
           </div>
-
         </div>
       </div>
     </section>

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { List, X, WhatsappLogo } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useIsMobile } from "./hooks/use-mobile";
+import Logo from "./logo-white";
+import LogoWhite from "./logo";
 
 const navLinks = [
   { label: "Price List", href: "#cars" },
@@ -65,7 +67,7 @@ export default function Header({ phone }: { phone?: string | null }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center group">
+          {/* <a href="#" className="flex items-center group">
             <Image
               src={isScrolled || isMobile ? "/logo.svg" : "/logo-white.svg"}
               alt="Adhitama 89 Rental Car"
@@ -74,7 +76,8 @@ export default function Header({ phone }: { phone?: string | null }) {
               priority
               className="h-8 sm:h-12 w-auto object-contain"
             />
-          </a>
+          </a> */}
+          {isScrolled || isMobile ? <LogoWhite /> : <Logo />}
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
