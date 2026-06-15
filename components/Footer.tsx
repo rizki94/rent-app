@@ -58,7 +58,6 @@ export default function Footer({ config }: FooterProps) {
       <div className="bg-[#0A274E] text-white pt-20 pb-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
-
             {/* Brand column */}
             <div className="lg:col-span-1">
               <Image
@@ -73,7 +72,8 @@ export default function Footer({ config }: FooterProps) {
                 }}
               />
               <p className="text-white/55 text-[14px] leading-relaxed mb-6">
-                Solusi transportasi terpercaya di Bandung sejak 2016. Armada terawat, harga bersahabat, pelayanan 24 jam.
+                Solusi transportasi terpercaya di Bandung sejak 2016. Armada
+                terawat, harga bersahabat, pelayanan 24 jam.
               </p>
               {/* Social icons */}
               <div className="flex gap-3">
@@ -119,7 +119,10 @@ export default function Footer({ config }: FooterProps) {
                       href={link.href}
                       className="flex items-center gap-2 text-white/55 hover:text-amber-400 text-[14px] transition-colors duration-200 group"
                     >
-                      <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200" weight="bold" />
+                      <ArrowRight
+                        className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200"
+                        weight="bold"
+                      />
                       {link.label}
                     </a>
                   </li>
@@ -138,8 +141,13 @@ export default function Footer({ config }: FooterProps) {
                     href="mailto:admin@adhitama89rental.com"
                     className="flex items-start gap-3 text-white/55 hover:text-white transition-colors group"
                   >
-                    <EnvelopeSimple className="w-4 h-4 mt-0.5 text-amber-400 shrink-0" weight="fill" />
-                    <span className="text-[13px]">admin@adhitama89rental.com</span>
+                    <EnvelopeSimple
+                      className="w-4 h-4 mt-0.5 text-amber-400 shrink-0"
+                      weight="fill"
+                    />
+                    <span className="text-[13px]">
+                      admin@adhitama89rental.com
+                    </span>
                   </a>
                 </li>
                 <li>
@@ -149,13 +157,19 @@ export default function Footer({ config }: FooterProps) {
                     rel="noopener noreferrer"
                     className="flex items-start gap-3 text-white/55 hover:text-white transition-colors"
                   >
-                    <WhatsappLogo className="w-4 h-4 mt-0.5 text-amber-400 shrink-0" weight="fill" />
+                    <WhatsappLogo
+                      className="w-4 h-4 mt-0.5 text-amber-400 shrink-0"
+                      weight="fill"
+                    />
                     <span className="text-[13px]">{displayPhone}</span>
                   </a>
                 </li>
                 <li>
                   <div className="flex items-start gap-3 text-white/55">
-                    <MapPin className="w-4 h-4 mt-0.5 text-amber-400 shrink-0" weight="fill" />
+                    <MapPin
+                      className="w-4 h-4 mt-0.5 text-amber-400 shrink-0"
+                      weight="fill"
+                    />
                     <span className="text-[13px] leading-relaxed">
                       {config?.address ||
                         "Jl. Turangga Barat Baru No.4, Lkr. Sel., Kec. Lengkong, Kota Bandung, Jawa Barat 40263"}
@@ -164,7 +178,10 @@ export default function Footer({ config }: FooterProps) {
                 </li>
                 <li>
                   <div className="flex items-center gap-3 text-white/55">
-                    <Clock className="w-4 h-4 text-amber-400 shrink-0" weight="fill" />
+                    <Clock
+                      className="w-4 h-4 text-amber-400 shrink-0"
+                      weight="fill"
+                    />
                     <span className="text-[13px]">Buka 24 Jam / 7 Hari</span>
                   </div>
                 </li>
@@ -186,13 +203,13 @@ export default function Footer({ config }: FooterProps) {
                 />
               </div>
             </div>
-
           </div>
 
           {/* Divider */}
           <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-white/35 text-[13px] text-center sm:text-left">
-              © {new Date().getFullYear()} Adhitama89 Rental. Semua hak dilindungi.
+              © {new Date().getFullYear()} Adhitama89 Rental. Semua hak
+              dilindungi.
             </p>
             <a
               href={`https://wa.me/${waPhone}?text=Halo%20Adhitama89!%20Saya%20ingin%20booking%20kendaraan`}

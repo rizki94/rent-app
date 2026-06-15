@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { List, X, WhatsappLogo } from "@phosphor-icons/react";
 import Image from "next/image";
+import { useIsMobile } from "./hooks/use-mobile";
 
 const navLinks = [
   { label: "Price List", href: "#cars" },
@@ -13,6 +14,7 @@ const navLinks = [
 ];
 
 export default function Header({ phone }: { phone?: string | null }) {
+  const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -44,27 +46,33 @@ export default function Header({ phone }: { phone?: string | null }) {
       }`}
     >
       {/* Pure CSS Checkbox Toggle */}
-      <input type="checkbox" id="mobile-menu-checkbox" className="peer hidden" />
+      <input
+        type="checkbox"
+        id="mobile-menu-checkbox"
+        className="peer hidden"
+      />
 
       {/* Sibling CSS to toggle Hamburger/Close icons based on checkbox state */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         #mobile-menu-checkbox:checked ~ * .menu-icon-list { display: none !important; }
         #mobile-menu-checkbox:checked ~ * .menu-icon-x { display: block !important; }
-      `}} />
+      `,
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center group">
             <Image
-              src="/logo.svg"
+              src={isScrolled || isMobile ? "/logo.svg" : "/logo-white.svg"}
               alt="Adhitama 89 Rental Car"
               width={130}
               height={55}
               priority
-              className={`h-8 sm:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105 ${
-                isScrolled ? "" : "md:brightness-0 md:invert"
-              }`}
+              className="h-8 sm:h-12 w-auto object-contain"
             />
           </a>
 
@@ -109,8 +117,14 @@ export default function Header({ phone }: { phone?: string | null }) {
               className="md:hidden w-12 h-12 flex items-center justify-center rounded-xl transition-colors text-[#0A274E] hover:bg-slate-100 relative z-[60] cursor-pointer"
               aria-label="Toggle menu"
             >
-              <List className="w-6 h-6 pointer-events-none menu-icon-list block" weight="bold" />
-              <X className="w-6 h-6 pointer-events-none menu-icon-x hidden" weight="bold" />
+              <List
+                className="w-6 h-6 pointer-events-none menu-icon-list block"
+                weight="bold"
+              />
+              <X
+                className="w-6 h-6 pointer-events-none menu-icon-x hidden"
+                weight="bold"
+              />
             </label>
           </div>
         </div>
