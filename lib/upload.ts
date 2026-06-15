@@ -10,6 +10,7 @@ export async function uploadFile(file: File): Promise<string> {
       const blob = await put(file.name, file, {
         access: "public",
         token: cleanToken,
+        addRandomSuffix: true
       });
       return blob.url;
     } catch (e) {
