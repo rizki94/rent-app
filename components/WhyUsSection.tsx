@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Star, CaretLeft, CaretRight, Quotes } from "@phosphor-icons/react";
 
 interface TestimonialType {
@@ -57,10 +57,13 @@ interface WhyUsSectionProps {
   initialTestimonials?: TestimonialType[];
 }
 
-export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps) {
+export default function WhyUsSection({
+  initialTestimonials,
+}: WhyUsSectionProps) {
   const [page, setPage] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -78,10 +81,49 @@ export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps)
         }))
       : defaultTestimonials;
 
-  const perPage = !isMounted ? 3 : isMobile ? 1 : 3;
-  const totalPages = Math.ceil(testimonials.length / perPage);
+  const totalPages = !isMounted
+    ? 1
+    : isMobile
+      ? testimonials.length
+      : Math.ceil(testimonials.length / 3);
   const activePage = Math.min(page, Math.max(0, totalPages - 1));
-  const visible = testimonials.slice(activePage * perPage, activePage * perPage + perPage);
+
+  const handlePageChange = (index: number) => {
+    setPage(index);
+    if (isMobile && scrollRef.current) {
+      const children = scrollRef.current.children;
+      if (children[index]) {
+        children[index].scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }
+    }
+  };
+
+  const handleScroll = () => {
+    if (!isMobile || !scrollRef.current) return;
+    const container = scrollRef.current;
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.clientWidth;
+    const children = container.children;
+
+    let activeIdx = 0;
+    let minDiff = Infinity;
+
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i] as HTMLElement;
+      const childCenter = child.offsetLeft + child.clientWidth / 2;
+      const containerCenter = scrollLeft + containerWidth / 2;
+      const diff = Math.abs(childCenter - containerCenter);
+      if (diff < minDiff) {
+        minDiff = diff;
+        activeIdx = i;
+      }
+    }
+    setPage(activeIdx);
+  };
 
   const avatarColors = [
     "bg-blue-600",
@@ -92,7 +134,10 @@ export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps)
   ];
 
   return (
-    <section id="testimoni" className="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+    <section
+      id="testimoni"
+      className="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden"
+    >
       <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-amber-50 rounded-full blur-[150px] opacity-50 pointer-events-none -translate-y-1/2 translate-x-1/3" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -106,15 +151,16 @@ export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps)
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-500 mx-auto rounded-full mb-5" />
           <p className="text-gray-500 text-base max-w-lg mx-auto">
-            Ribuan pelanggan telah mempercayakan perjalanan mereka kepada Adhitama89.
+            Ribuan pelanggan telah mempercayakan perjalanan mereka kepada
+            Adhitama89.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 mb-10">
-          {visible.map((t, index) => {
+        {/* Desktop Grid (hidden on mobile) */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-7 mb-10">
+          {testimonials.slice(activePage * 3, activePage * 3 + 3).map((t) => {
             const colorClass = avatarColors[t.id % avatarColors.length];
-            const initial = (t as (typeof defaultTestimonials)[0]).initial || t.name.charAt(0);
+            const initial = t.initial || t.name.charAt(0);
             return (
               <div
                 key={t.id}
@@ -129,7 +175,11 @@ export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps)
                 {/* Stars */}
                 <div className="flex gap-1 mb-5">
                   {Array.from({ length: t.stars }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-amber-400" weight="fill" />
+                    <Star
+                      key={i}
+                      className="w-4 h-4 text-amber-400"
+                      weight="fill"
+                    />
                   ))}
                 </div>
 
@@ -140,12 +190,75 @@ export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps)
 
                 {/* Author */}
                 <div className="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100">
-                  <div className={`w-10 h-10 rounded-full ${colorClass} flex items-center justify-center text-white font-bold text-sm shrink-0`}>
+                  <div
+                    className={`w-10 h-10 rounded-full ${colorClass} flex items-center justify-center text-white font-bold text-sm shrink-0`}
+                  >
                     {initial}
                   </div>
                   <div>
-                    <p className="text-[#0A274E] font-bold text-[15px] leading-none mb-1">{t.name}</p>
-                    <p className="text-gray-400 text-[12px]">Customer Adhitama89</p>
+                    <p className="text-[#0A274E] font-bold text-[15px] leading-none mb-1">
+                      {t.name}
+                    </p>
+                    <p className="text-gray-400 text-[12px]">
+                      Customer Adhitama89
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Mobile Horizontal Snap-Scroll Slider */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="sm:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 px-4 -mx-4 scrollbar-none scroll-smooth mb-10"
+        >
+          {testimonials.map((t) => {
+            const colorClass = avatarColors[t.id % avatarColors.length];
+            const initial = t.initial || t.name.charAt(0);
+            return (
+              <div
+                key={t.id}
+                className="w-[85vw] shrink-0 snap-center group bg-white rounded-2xl p-7 flex flex-col border border-gray-100 shadow-sm relative overflow-hidden"
+              >
+                {/* Big quote icon decoration */}
+                <Quotes
+                  className="absolute top-4 right-5 w-10 h-10 text-slate-100 group-hover:text-amber-100 transition-colors duration-300"
+                  weight="fill"
+                />
+
+                {/* Stars */}
+                <div className="flex gap-1 mb-5">
+                  {Array.from({ length: t.stars }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-4 h-4 text-amber-400"
+                      weight="fill"
+                    />
+                  ))}
+                </div>
+
+                {/* Comment */}
+                <p className="text-gray-600 text-[14px] leading-relaxed mb-6 flex-1 italic">
+                  &ldquo;{t.comment}&rdquo;
+                </p>
+
+                {/* Author */}
+                <div className="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100">
+                  <div
+                    className={`w-10 h-10 rounded-full ${colorClass} flex items-center justify-center text-white font-bold text-sm shrink-0`}
+                  >
+                    {initial}
+                  </div>
+                  <div>
+                    <p className="text-[#0A274E] font-bold text-[15px] leading-none mb-1">
+                      {t.name}
+                    </p>
+                    <p className="text-gray-400 text-[12px]">
+                      Customer Adhitama89
+                    </p>
                   </div>
                 </div>
               </div>
@@ -157,7 +270,7 @@ export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps)
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-4">
             <button
-              onClick={() => setPage(Math.max(0, activePage - 1))}
+              onClick={() => handlePageChange(Math.max(0, activePage - 1))}
               disabled={activePage === 0}
               aria-label="Previous"
               className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#0A274E] hover:border-[#0A274E] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
@@ -169,17 +282,21 @@ export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps)
               {Array.from({ length: totalPages }).map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setPage(i)}
+                  onClick={() => handlePageChange(i)}
                   aria-label={`Page ${i + 1}`}
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    i === activePage ? "bg-[#0A274E] w-8" : "bg-gray-300 w-2 hover:bg-gray-400"
+                    i === activePage
+                      ? "bg-[#0A274E] w-8"
+                      : "bg-gray-300 w-2 hover:bg-gray-400"
                   }`}
                 />
               ))}
             </div>
 
             <button
-              onClick={() => setPage(Math.min(totalPages - 1, activePage + 1))}
+              onClick={() =>
+                handlePageChange(Math.min(totalPages - 1, activePage + 1))
+              }
               disabled={activePage >= totalPages - 1}
               aria-label="Next"
               className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#0A274E] hover:border-[#0A274E] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"

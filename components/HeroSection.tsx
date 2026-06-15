@@ -7,7 +7,7 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
   return (
     <section className="relative w-full">
       {/* Main Hero Banner */}
-      <div className="relative min-h-[750px] flex items-center overflow-hidden pt-32 pb-40">
+      <div className="relative min-h-[650px] lg:min-h-[750px] flex items-center overflow-hidden pt-28 pb-32 lg:pt-32 lg:pb-40">
         {/* Background Banner Image */}
         <Image
           src="/hero_banner.jpeg"
@@ -17,12 +17,12 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
           className="object-cover z-0 object-center scale-105 animate-slow-zoom"
         />
         {/* Premium Dark Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0B132B]/95 via-[#0A274E]/80 to-transparent z-0 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-transparent to-transparent z-0 pointer-events-none" />
+        <div className="absolute inset-0 bg-[#0B132B]/80 lg:bg-gradient-to-br lg:from-[#0B132B]/95 lg:via-[#0A274E]/80 lg:to-transparent z-0 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-transparent to-[#0B132B]/50 z-0 pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex flex-col lg:flex-row items-center gap-12">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex flex-col lg:flex-row items-center gap-10 lg:gap-12">
           {/* Left Content */}
-          <div className="w-full lg:w-[55%] text-left pt-10 pb-10">
+          <div className="w-full lg:w-[55%] text-left pt-6 pb-6">
             <div className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
               <span className="text-sm font-medium text-amber-300 tracking-wide">
                 ✨ Selamat Datang di Adhitama89
@@ -31,7 +31,7 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
             <h2 className="text-[36px] sm:text-[48px] lg:text-[52px] font-extrabold text-white leading-[1.15] mb-6 tracking-tight drop-shadow-lg animate-fade-in-up">
               Sewa Mobil Bandung Lepas Kunci Terpercaya
             </h2>
-            <p className="text-white/90 text-lg sm:text-xl font-light leading-relaxed mb-10 max-w-2xl">
+            <p className="text-white/90 text-base sm:text-lg lg:text-xl font-light leading-relaxed mb-8 max-w-2xl">
               Percayakan perjalananmu pada kami, karena bersama Adhitama89{" "}
               <strong className="font-semibold text-amber-400">
                 #JalanJadiMudah
@@ -42,7 +42,7 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
             <div className="flex flex-wrap gap-5 items-center">
               <a
                 href="#cars"
-                className="group relative overflow-hidden bg-gradient-to-r from-amber-400 to-amber-500 text-slate-900 font-bold text-[15px] px-10 py-4 rounded-full transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.4)] hover:-translate-y-0.5 flex items-center gap-3"
+                className="group relative overflow-hidden bg-gradient-to-r from-amber-400 to-amber-500 text-slate-900 font-bold text-[15px] px-8 sm:px-10 py-3.5 sm:py-4 rounded-full transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.4)] hover:-translate-y-0.5 flex items-center gap-3"
               >
                 <span className="relative z-10">Cek Harga</span>
                 <svg
@@ -58,22 +58,22 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
           </div>
 
           {/* Right Floating Glassmorphism Collage */}
-          <div className="w-full lg:w-[45%] relative min-h-[350px] flex items-center justify-center">
+          <div className="w-full lg:w-[45%] relative min-h-[300px] lg:min-h-[350px] flex items-center justify-center">
             {/* Ambient Background Glow */}
             <div className="absolute w-72 h-72 rounded-full bg-amber-400/20 blur-[80px] pointer-events-none" />
             <div className="absolute w-60 h-60 rounded-full bg-blue-500/20 blur-[80px] pointer-events-none translate-x-10 translate-y-10" />
 
-            <div className="relative w-full max-w-[420px] space-y-4">
+            <div className="relative w-full max-w-[420px] space-y-3.5 sm:space-y-4 px-2 sm:px-0">
               {/* Glass Card 1 */}
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 flex items-center gap-4 text-white shadow-lg transform translate-x-[-20px] hover:translate-x-0 transition-transform duration-300 animate-float">
-                <div className="w-12 h-12 rounded-xl bg-amber-400 flex items-center justify-center shrink-0">
-                  <Wrench className="w-6 h-6 text-slate-900" weight="bold" />
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 flex items-center gap-4 text-white shadow-lg transform lg:translate-x-[-20px] hover:translate-x-0 transition-transform duration-300 animate-float">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-400 flex items-center justify-center shrink-0">
+                  <Wrench className="w-5 h-5 sm:w-6 sm:h-6 text-slate-900" weight="bold" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-base text-amber-300">
+                  <h4 className="font-bold text-sm sm:text-base text-amber-300">
                     Unit Terawat
                   </h4>
-                  <p className="text-white/70 text-xs mt-0.5">
+                  <p className="text-white/70 text-[11px] sm:text-xs mt-0.5">
                     Kondisi mesin & kebersihan interior terjamin prima.
                   </p>
                 </div>
@@ -81,17 +81,17 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
 
               {/* Glass Card 2 */}
               <div
-                className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl p-5 flex items-center gap-4 text-white shadow-lg transform translate-x-[20px] hover:translate-x-0 transition-transform duration-300 animate-float"
+                className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 flex items-center gap-4 text-white shadow-lg transform lg:translate-x-[20px] hover:translate-x-0 transition-transform duration-300 animate-float"
                 style={{ animationDelay: "1.5s" }}
               >
-                <div className="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center shrink-0">
-                  <Tag className="w-6 h-6 text-white" weight="bold" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500 flex items-center justify-center shrink-0">
+                  <Tag className="w-5 h-5 sm:w-6 sm:h-6 text-white" weight="bold" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-base text-blue-300">
+                  <h4 className="font-bold text-sm sm:text-base text-blue-300">
                     Harga Bersahabat
                   </h4>
-                  <p className="text-white/70 text-xs mt-0.5">
+                  <p className="text-white/70 text-[11px] sm:text-xs mt-0.5">
                     Tarif sewa transparan & bersaing di seluruh Bandung.
                   </p>
                 </div>
@@ -99,17 +99,17 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
 
               {/* Glass Card 3 */}
               <div
-                className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 flex items-center gap-4 text-white shadow-lg transform translate-x-[-10px] hover:translate-x-0 transition-transform duration-300 animate-float"
+                className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 flex items-center gap-4 text-white shadow-lg transform lg:translate-x-[-10px] hover:translate-x-0 transition-transform duration-300 animate-float"
                 style={{ animationDelay: "3s" }}
               >
-                <div className="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center shrink-0">
-                  <Sparkle className="w-6 h-6 text-white" weight="bold" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500 flex items-center justify-center shrink-0">
+                  <Sparkle className="w-5 h-5 sm:w-6 sm:h-6 text-white" weight="bold" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-base text-emerald-300">
+                  <h4 className="font-bold text-sm sm:text-base text-emerald-300">
                     Proses Mudah
                   </h4>
-                  <p className="text-white/70 text-xs mt-0.5">
+                  <p className="text-white/70 text-[11px] sm:text-xs mt-0.5">
                     Booking cepat langsung via chat online WhatsApp.
                   </p>
                 </div>
@@ -120,16 +120,16 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
       </div>
 
       {/* Stats Bar */}
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 -mt-24 mb-20">
-        <div className="bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] p-8 sm:p-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 -mt-16 sm:-mt-24 mb-20">
+        <div className="bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] p-6 sm:p-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {[
               {
                 value: "2500+",
                 label: "Member",
                 icon: (
                   <svg
-                    className="w-10 h-10 text-[#0A274E] mx-auto mb-4"
+                    className="w-6 h-6 sm:w-8 sm:h-8 text-[#0A274E]"
                     fill="currentColor"
                     viewBox="0 0 576 512"
                   >
@@ -142,7 +142,7 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
                 label: "Customer",
                 icon: (
                   <svg
-                    className="w-10 h-10 text-[#0A274E] mx-auto mb-4"
+                    className="w-6 h-6 sm:w-8 sm:h-8 text-[#0A274E]"
                     fill="currentColor"
                     viewBox="0 0 640 512"
                   >
@@ -155,7 +155,7 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
                 label: "Units",
                 icon: (
                   <svg
-                    className="w-10 h-10 text-[#0A274E] mx-auto mb-4"
+                    className="w-6 h-6 sm:w-8 sm:h-8 text-[#0A274E]"
                     fill="currentColor"
                     viewBox="0 0 640 512"
                   >
@@ -168,7 +168,7 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
                 label: "Terpercaya",
                 icon: (
                   <svg
-                    className="w-10 h-10 text-[#0A274E] mx-auto mb-4"
+                    className="w-6 h-6 sm:w-8 sm:h-8 text-[#0A274E]"
                     fill="currentColor"
                     viewBox="0 0 512 512"
                   >
@@ -178,13 +178,13 @@ export default function HeroSection({ phone }: { phone?: string | null }) {
               },
             ].map((stat, idx) => (
               <div key={idx} className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-[#0A274E]/5 flex items-center justify-center group-hover:bg-[#0A274E] group-hover:text-white transition-all duration-300">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-5 rounded-2xl bg-[#0A274E]/5 flex items-center justify-center group-hover:bg-[#0A274E] group-hover:text-white transition-all duration-300">
                   {stat.icon}
                 </div>
-                <h3 className="text-[32px] font-extrabold text-[#0A274E] leading-none mb-2">
+                <h3 className="text-[20px] sm:text-[32px] font-extrabold text-[#0A274E] leading-none mb-1 sm:mb-2">
                   {stat.value}
                 </h3>
-                <p className="text-[15px] text-[#54595F] font-medium tracking-wide uppercase">
+                <p className="text-[10px] sm:text-[13px] text-[#54595F] font-bold tracking-wide uppercase">
                   {stat.label}
                 </p>
               </div>

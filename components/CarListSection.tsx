@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Tag, CaretLeft, CaretRight } from "@phosphor-icons/react";
 
@@ -68,8 +68,6 @@ function CarCard({
   phone: string;
 }) {
   const priceFormatted = formatPrice(car.price);
-  const seats = (car as (typeof defaultCars)[0]).seats;
-  const transmission = (car as (typeof defaultCars)[0]).transmission;
   const category = (car as (typeof defaultCars)[0]).category;
 
   return (
@@ -97,9 +95,9 @@ function CarCard({
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-6">
-        <h3 className="text-[#0A274E] font-bold text-[20px] mb-3">{car.name}</h3>
-
-
+        <h3 className="text-[#0A274E] font-bold text-[20px] mb-3">
+          {car.name}
+        </h3>
 
         {/* Pricing + CTA */}
         <div className="flex items-end justify-between mt-auto">
@@ -110,7 +108,9 @@ function CarCard({
             </div>
             <div className="flex items-baseline gap-1">
               <span className="text-gray-500 text-[13px]">Rp</span>
-              <span className="text-[24px] font-extrabold text-[#0A274E] leading-none">{priceFormatted}</span>
+              <span className="text-[24px] font-extrabold text-[#0A274E] leading-none">
+                {priceFormatted}
+              </span>
             </div>
             <span className="text-gray-400 text-[12px]">/ 24 Jam</span>
           </div>
@@ -140,6 +140,7 @@ export default function CarListSection({
   const [page, setPage] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -151,19 +152,64 @@ export default function CarListSection({
 
   const cars =
     initialCars && initialCars.length > 0
-      ? initialCars.map((c) => ({ ...c, seats: 7, transmission: "Otomatis", category: "Rental" }))
+      ? initialCars.map((c) => ({
+          ...c,
+          seats: 7,
+          transmission: "Otomatis",
+          category: "Rental",
+        }))
       : defaultCars;
   const activePhone = phone || "6281234567890";
 
-  const perPage = !isMounted ? 3 : isMobile ? 1 : 3;
-  const totalPages = Math.ceil(cars.length / perPage);
-  
-  // Prevent out of bounds page index when switching layout
+  const totalPages = !isMounted
+    ? 1
+    : isMobile
+      ? cars.length
+      : Math.ceil(cars.length / 3);
   const activePage = Math.min(page, Math.max(0, totalPages - 1));
-  const visible = cars.slice(activePage * perPage, activePage * perPage + perPage);
+
+  const handlePageChange = (index: number) => {
+    setPage(index);
+    if (isMobile && scrollRef.current) {
+      const children = scrollRef.current.children;
+      if (children[index]) {
+        children[index].scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }
+    }
+  };
+
+  const handleScroll = () => {
+    if (!isMobile || !scrollRef.current) return;
+    const container = scrollRef.current;
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.clientWidth;
+    const children = container.children;
+
+    let activeIdx = 0;
+    let minDiff = Infinity;
+
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i] as HTMLElement;
+      const childCenter = child.offsetLeft + child.clientWidth / 2;
+      const containerCenter = scrollLeft + containerWidth / 2;
+      const diff = Math.abs(childCenter - containerCenter);
+      if (diff < minDiff) {
+        minDiff = diff;
+        activeIdx = i;
+      }
+    }
+    setPage(activeIdx);
+  };
 
   return (
-    <section id="cars" className="py-24 bg-gradient-to-b from-slate-50 to-white">
+    <section
+      id="cars"
+      className="py-24 bg-gradient-to-b from-slate-50 to-white"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="mb-14 text-center">
@@ -175,14 +221,28 @@ export default function CarListSection({
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-500 mx-auto rounded-full mb-5" />
           <p className="text-gray-500 text-base max-w-xl mx-auto">
-            Unit yang paling sering disewa — terawat, nyaman, dan siap menemani perjalananmu.
+            Unit yang paling sering disewa — terawat, nyaman, dan siap menemani
+            perjalananmu.
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {visible.map((car) => (
+        {/* Desktop Grid (hidden on mobile) */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {cars.slice(activePage * 3, activePage * 3 + 3).map((car) => (
             <CarCard key={car.id} car={car} phone={activePhone} />
+          ))}
+        </div>
+
+        {/* Mobile Horizontal Snap-Scroll Slider */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="sm:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 px-4 -mx-4 scrollbar-none scroll-smooth"
+        >
+          {cars.map((car) => (
+            <div key={car.id} className="w-[85vw] shrink-0 snap-center">
+              <CarCard car={car} phone={activePhone} />
+            </div>
           ))}
         </div>
 
@@ -190,7 +250,7 @@ export default function CarListSection({
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 mt-12">
             <button
-              onClick={() => setPage(Math.max(0, activePage - 1))}
+              onClick={() => handlePageChange(Math.max(0, activePage - 1))}
               disabled={activePage === 0}
               aria-label="Previous"
               className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#0A274E] hover:border-[#0A274E] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
@@ -202,17 +262,21 @@ export default function CarListSection({
               {Array.from({ length: totalPages }).map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setPage(i)}
+                  onClick={() => handlePageChange(i)}
                   aria-label={`Page ${i + 1}`}
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    i === activePage ? "bg-[#0A274E] w-8" : "bg-gray-300 w-2 hover:bg-gray-400"
+                    i === activePage
+                      ? "bg-[#0A274E] w-8"
+                      : "bg-gray-300 w-2 hover:bg-gray-400"
                   }`}
                 />
               ))}
             </div>
 
             <button
-              onClick={() => setPage(Math.min(totalPages - 1, activePage + 1))}
+              onClick={() =>
+                handlePageChange(Math.min(totalPages - 1, activePage + 1))
+              }
               disabled={activePage >= totalPages - 1}
               aria-label="Next"
               className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#0A274E] hover:border-[#0A274E] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
