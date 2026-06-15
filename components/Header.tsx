@@ -14,7 +14,6 @@ const navLinks = [
 
 export default function Header({ phone }: { phone?: string | null }) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -28,21 +27,31 @@ export default function Header({ phone }: { phone?: string | null }) {
     href: string,
   ) => {
     e.preventDefault();
-    setMenuOpen(false);
+    const checkbox = document.getElementById(
+      "mobile-menu-checkbox",
+    ) as HTMLInputElement;
+    if (checkbox) checkbox.checked = false;
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const showWhiteHeader = isScrolled || menuOpen;
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        showWhiteHeader
-          ? "bg-white/95 backdrop-blur-lg shadow-[0_4px_30px_rgba(0,0,0,0.08)] py-3"
-          : "bg-white/95 md:bg-transparent shadow-[0_4px_30px_rgba(0,0,0,0.05)] md:shadow-none py-3 md:py-5"
+        isScrolled
+          ? "bg-white md:backdrop-blur-lg shadow-[0_4px_30px_rgba(0,0,0,0.08)] py-3"
+          : "bg-white md:bg-transparent md:backdrop-blur-none shadow-[0_4px_30px_rgba(0,0,0,0.05)] md:shadow-none py-3 md:py-5"
       }`}
     >
+      {/* Pure CSS Checkbox Toggle */}
+      <input type="checkbox" id="mobile-menu-checkbox" className="peer hidden" />
+
+      {/* Sibling CSS to toggle Hamburger/Close icons based on checkbox state */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        #mobile-menu-checkbox:checked ~ * .menu-icon-list { display: none !important; }
+        #mobile-menu-checkbox:checked ~ * .menu-icon-x { display: block !important; }
+      `}} />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -54,7 +63,7 @@ export default function Header({ phone }: { phone?: string | null }) {
               height={55}
               priority
               className={`h-8 sm:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105 ${
-                showWhiteHeader ? "" : "md:brightness-0 md:invert"
+                isScrolled ? "" : "md:brightness-0 md:invert"
               }`}
             />
           </a>
@@ -67,7 +76,7 @@ export default function Header({ phone }: { phone?: string | null }) {
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`relative text-[14px] font-medium transition-colors duration-200 py-1 group ${
-                  showWhiteHeader
+                  isScrolled
                     ? "text-[#0A274E] hover:text-amber-500"
                     : "text-white/90 hover:text-white"
                 }`}
@@ -93,53 +102,46 @@ export default function Header({ phone }: { phone?: string | null }) {
               <span>Hubungi Kami</span>
             </a>
 
-            {/* Mobile Toggle */}
-            <button
+            {/* Mobile Toggle (Label targeting the checkbox) */}
+            <label
+              htmlFor="mobile-menu-checkbox"
               id="mobile-menu-toggle"
-              className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl transition-colors text-[#0A274E] hover:bg-slate-100 relative z-[60] cursor-pointer"
-              onClick={() => {
-                setMenuOpen(!menuOpen);
-              }}
+              className="md:hidden w-12 h-12 flex items-center justify-center rounded-xl transition-colors text-[#0A274E] hover:bg-slate-100 relative z-[60] cursor-pointer"
               aria-label="Toggle menu"
             >
-              {menuOpen ? (
-                <X className="w-6 h-6" weight="bold" />
-              ) : (
-                <List className="w-6 h-6" weight="bold" />
-              )}
-            </button>
+              <List className="w-6 h-6 pointer-events-none menu-icon-list block" weight="bold" />
+              <X className="w-6 h-6 pointer-events-none menu-icon-x hidden" weight="bold" />
+            </label>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
-          <div className="px-6 py-4 flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="px-4 py-3 text-[15px] font-medium rounded-xl text-[#0A274E] hover:bg-slate-50 hover:text-amber-500 transition-all"
-              >
-                {link.label}
-              </a>
-            ))}
-            <div className="mt-2 pt-3 border-t border-slate-100">
-              <a
-                href={`https://wa.me/${phone || "6281234567890"}?text=Halo,%20saya%20ingin%20menyewa%20mobil`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full text-[15px] font-semibold px-6 py-3.5 rounded-full bg-[#0A274E] hover:bg-[#0d336a] text-white transition-all"
-              >
-                <WhatsappLogo className="w-4 h-4" weight="fill" />
-                Hubungi Admin
-              </a>
-            </div>
+      {/* Mobile Menu (Controlled purely via CSS peer selector) */}
+      <div className="mobile-menu-dropdown hidden peer-checked:block md:hidden bg-white">
+        <div className="px-6 py-4 flex flex-col gap-1">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="px-4 py-3 text-[15px] font-medium rounded-xl text-[#0A274E] hover:bg-slate-50 hover:text-amber-500 transition-all"
+            >
+              {link.label}
+            </a>
+          ))}
+          <div className="mt-2 pt-3 border-t border-slate-100">
+            <a
+              href={`https://wa.me/${phone || "6281234567890"}?text=Halo,%20saya%20ingin%20menyewa%20mobil`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full text-[15px] font-semibold px-6 py-3.5 rounded-full bg-[#0A274E] hover:bg-[#0d336a] text-white transition-all"
+            >
+              <WhatsappLogo className="w-4 h-4" weight="fill" />
+              Hubungi Admin
+            </a>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }
