@@ -263,7 +263,7 @@ export default function DashboardClient({
             onClick={() => setActiveTab("cars")}
             className={`flex items-center gap-2 px-6 py-4 border-b-2 font-black text-sm uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
               activeTab === "cars"
-                ? "border-[#2d3e8c] text-[#2d3e8c]"
+                ? "border-[#1B69F4] text-[#1B69F4]"
                 : "border-transparent text-gray-500 hover:text-gray-900"
             }`}
           >
@@ -274,7 +274,7 @@ export default function DashboardClient({
             onClick={() => setActiveTab("testimonials")}
             className={`flex items-center gap-2 px-6 py-4 border-b-2 font-black text-sm uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
               activeTab === "testimonials"
-                ? "border-[#2d3e8c] text-[#2d3e8c]"
+                ? "border-[#1B69F4] text-[#1B69F4]"
                 : "border-transparent text-gray-500 hover:text-gray-900"
             }`}
           >
@@ -285,7 +285,7 @@ export default function DashboardClient({
             onClick={() => setActiveTab("config")}
             className={`flex items-center gap-2 px-6 py-4 border-b-2 font-black text-sm uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
               activeTab === "config"
-                ? "border-[#2d3e8c] text-[#2d3e8c]"
+                ? "border-[#1B69F4] text-[#1B69F4]"
                 : "border-transparent text-gray-500 hover:text-gray-900"
             }`}
           >
@@ -313,7 +313,7 @@ export default function DashboardClient({
                   setCarImagePreview(null);
                   setCarModal({ open: true, car: null });
                 }}
-                className="bg-[#2d3e8c] hover:bg-[#1e2d6e] text-white font-bold text-sm uppercase tracking-wider px-5 py-3 rounded-xl flex items-center gap-2 transition-colors cursor-pointer shadow-md"
+                className="bg-[#1B69F4] hover:bg-[#1e2d6e] text-white font-bold text-sm uppercase tracking-wider px-5 py-3 rounded-xl flex items-center gap-2 transition-colors cursor-pointer shadow-md"
               >
                 <Plus className="w-4 h-4" weight="bold" />
                 Tambah Mobil
@@ -357,7 +357,7 @@ export default function DashboardClient({
                             {car.qty}
                           </span>
                         </p>
-                        <div className="bg-blue-50/50 rounded-xl px-4 py-2 text-sm text-[#2d3e8c] font-black inline-block">
+                        <div className="bg-blue-50/50 rounded-xl px-4 py-2 text-sm text-[#1B69F4] font-black inline-block">
                           Rp {car.price}{" "}
                           <span className="font-normal text-xs text-gray-500">
                             / {car.pricePer}
@@ -408,7 +408,7 @@ export default function DashboardClient({
                 onClick={() =>
                   setTestimonialModal({ open: true, testimonial: null })
                 }
-                className="bg-[#2d3e8c] hover:bg-[#1e2d6e] text-white font-bold text-sm uppercase tracking-wider px-5 py-3 rounded-xl flex items-center gap-2 transition-colors cursor-pointer shadow-md"
+                className="bg-[#1B69F4] hover:bg-[#1e2d6e] text-white font-bold text-sm uppercase tracking-wider px-5 py-3 rounded-xl flex items-center gap-2 transition-colors cursor-pointer shadow-md"
               >
                 <Plus className="w-4 h-4" weight="bold" />
                 Tambah Testimoni
@@ -504,7 +504,7 @@ export default function DashboardClient({
                   required
                   defaultValue={config?.phone || ""}
                   placeholder="Format: 6281234567890 (Tanpa tanda +)"
-                  className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
+                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
                 />
               </div>
 
@@ -518,7 +518,7 @@ export default function DashboardClient({
                   rows={3}
                   defaultValue={config?.address || ""}
                   placeholder="Masukkan alamat lengkap kantor rental mobil"
-                  className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all resize-none"
+                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all resize-none"
                 />
               </div>
 
@@ -532,7 +532,7 @@ export default function DashboardClient({
                     name="instagramAccount"
                     defaultValue={config?.instagramAccount || ""}
                     placeholder="Contoh: @adhitama89"
-                    className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
+                    className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
                   />
                 </div>
 
@@ -545,7 +545,7 @@ export default function DashboardClient({
                     name="tiktokAccount"
                     defaultValue={config?.tiktokAccount || ""}
                     placeholder="Contoh: @adhitama89"
-                    className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
+                    className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
                   />
                 </div>
               </div>
@@ -559,14 +559,14 @@ export default function DashboardClient({
                   rows={4}
                   defaultValue={config?.mapPinPoint || ""}
                   placeholder="Salin iframe src dari Google Maps share menu (contoh: https://www.google.com/maps/embed?...)"
-                  className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all text-xs"
+                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all text-xs"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-[#2d3e8c] hover:bg-[#1e2d6e] disabled:bg-gray-400 text-white font-black text-sm uppercase tracking-widest px-8 py-3.5 rounded-xl transition-colors cursor-pointer shadow-md flex items-center justify-center gap-2"
+                className="bg-[#1B69F4] hover:bg-[#1e2d6e] disabled:bg-gray-400 text-white font-black text-sm uppercase tracking-widest px-8 py-3.5 rounded-xl transition-colors cursor-pointer shadow-md flex items-center justify-center gap-2"
               >
                 {submitting && (
                   <ArrowClockwise className="animate-spin w-4 h-4" />
@@ -597,7 +597,7 @@ export default function DashboardClient({
                   required
                   defaultValue={carModal.car?.name || ""}
                   placeholder="Contoh: Toyota Innova Zenix"
-                  className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-2.5 outline-none transition-all"
+                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-2.5 outline-none transition-all"
                 />
               </div>
 
@@ -612,7 +612,7 @@ export default function DashboardClient({
                     required
                     defaultValue={carModal.car?.price || ""}
                     placeholder="Contoh: 250000 - 375000 atau 700.000"
-                    className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-2.5 outline-none transition-all"
+                    className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-2.5 outline-none transition-all"
                   />
                 </div>
 
@@ -623,7 +623,7 @@ export default function DashboardClient({
                   <select
                     name="pricePer"
                     defaultValue={carModal.car?.pricePer || "day"}
-                    className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-2.5 outline-none transition-all bg-white"
+                    className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-2.5 outline-none transition-all bg-white"
                   >
                     <option value="day">Day</option>
                     <option value="month">Month</option>
@@ -643,7 +643,7 @@ export default function DashboardClient({
                   min={1}
                   defaultValue={carModal.car?.qty || 1}
                   placeholder="Masukkan jumlah unit"
-                  className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-2.5 outline-none transition-all"
+                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-2.5 outline-none transition-all"
                 />
               </div>
 
@@ -691,7 +691,7 @@ export default function DashboardClient({
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 bg-[#2d3e8c] hover:bg-[#1e2d6e] disabled:bg-gray-400 text-white font-black text-sm uppercase tracking-widest py-3 rounded-xl transition-colors cursor-pointer text-center"
+                  className="flex-1 bg-[#1B69F4] hover:bg-[#1e2d6e] disabled:bg-gray-400 text-white font-black text-sm uppercase tracking-widest py-3 rounded-xl transition-colors cursor-pointer text-center"
                 >
                   {submitting ? "Menyimpan..." : "Simpan"}
                 </button>
@@ -732,7 +732,7 @@ export default function DashboardClient({
                   required
                   defaultValue={testimonialModal.testimonial?.name || ""}
                   placeholder="Contoh: Andi Wijaya"
-                  className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-2.5 outline-none transition-all"
+                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-2.5 outline-none transition-all"
                 />
               </div>
 
@@ -743,7 +743,7 @@ export default function DashboardClient({
                 <select
                   name="stars"
                   defaultValue={testimonialModal.testimonial?.stars || 5}
-                  className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-2.5 outline-none transition-all bg-white"
+                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-2.5 outline-none transition-all bg-white"
                 >
                   <option value={5}>5 Bintang (Sempurna)</option>
                   <option value={4}>4 Bintang (Sangat Baik)</option>
@@ -763,7 +763,7 @@ export default function DashboardClient({
                   rows={4}
                   defaultValue={testimonialModal.testimonial?.comment || ""}
                   placeholder="Masukkan ulasan atau ulasan lengkap pelanggan..."
-                  className="w-full border border-gray-200 focus:border-[#2d3e8c] focus:ring-1 focus:ring-[#2d3e8c] rounded-xl px-4 py-2.5 outline-none transition-all resize-none"
+                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-2.5 outline-none transition-all resize-none"
                 />
               </div>
 
@@ -771,7 +771,7 @@ export default function DashboardClient({
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 bg-[#2d3e8c] hover:bg-[#1e2d6e] disabled:bg-gray-400 text-white font-black text-sm uppercase tracking-widest py-3 rounded-xl transition-colors cursor-pointer text-center"
+                  className="flex-1 bg-[#1B69F4] hover:bg-[#1e2d6e] disabled:bg-gray-400 text-white font-black text-sm uppercase tracking-widest py-3 rounded-xl transition-colors cursor-pointer text-center"
                 >
                   {submitting ? "Menyimpan..." : "Simpan"}
                 </button>

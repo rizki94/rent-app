@@ -2,6 +2,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import HeroSection from "@/components/HeroSection";
+import AboutUsSection from "@/components/AboutUsSection";
+import WhyUsFeatureSection from "@/components/WhyUsFeatureSection";
 import CarListSection from "@/components/CarListSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import WhyUsSection from "@/components/WhyUsSection";
@@ -65,10 +67,19 @@ export default async function Home() {
       />
       <Header phone={config?.phone} />
       <main>
+        {/* 1. Hero — Dark navy, yellow CTA, stats */}
         <HeroSection phone={config?.phone} />
+        {/* 2. About Us — Light gray bg, image left, text right */}
+        <AboutUsSection />
+        {/* 3. Kenapa Harus Kami — Dark navy cards */}
+        <WhyUsFeatureSection />
+        {/* 4. Price List / Armada — Light gray bg, white cards */}
         <CarListSection initialCars={cars} phone={config?.phone} />
+        {/* 5. Fasilitas & Layanan — White bg, icon cards */}
         <FeaturesSection />
+        {/* 6. Testimoni — Light gray bg, white quote cards */}
         <WhyUsSection initialTestimonials={testimonials} />
+        {/* 7. FAQ — White bg, custom accordion */}
         <FAQSection />
       </main>
       <Footer config={config} />

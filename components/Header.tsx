@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { List, X } from "@phosphor-icons/react";
+import { List, X, WhatsappLogo } from "@phosphor-icons/react";
 import Image from "next/image";
 
 const navLinks = [
   { label: "Price List", href: "#cars" },
   { label: "Layanan", href: "#layanan" },
+  { label: "Tentang Kami", href: "#about" },
   { label: "Testimoni", href: "#testimoni" },
   { label: "FAQ", href: "#faq" },
 ];
@@ -16,7 +17,7 @@ export default function Header({ phone }: { phone?: string | null }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -35,24 +36,26 @@ export default function Header({ phone }: { phone?: string | null }) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-[#1a2b5e]/95 backdrop-blur-lg shadow-xl border-b border-white/5 py-3"
-          : "bg-white/90 backdrop-blur-md border-b border-gray-100/80 py-5"
+          ? "bg-white/95 backdrop-blur-lg shadow-[0_4px_30px_rgba(0,0,0,0.08)] py-3"
+          : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between transition-all duration-300">
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center group">
             <Image
-              src={isScrolled ? "/logo-white.svg" : "/logo.svg"}
+              src="/logo.svg"
               alt="Adhitama 89 Rental Car"
-              width={110}
-              height={50}
+              width={130}
+              height={55}
               priority
-              className="h-12 sm:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              className={`h-11 sm:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105 ${
+                isScrolled ? "" : "brightness-0 invert"
+              }`}
             />
           </a>
- 
+
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
@@ -60,40 +63,38 @@ export default function Header({ phone }: { phone?: string | null }) {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className={`text-base font-bold uppercase tracking-wider transition-all duration-350 relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:transition-all after:duration-300 hover:after:w-full ${
+                className={`relative text-[14px] font-medium transition-colors duration-200 py-1 group ${
                   isScrolled
-                    ? "text-white/85 hover:text-white after:bg-white"
-                    : "text-gray-700 hover:text-[#2d3e8c] after:bg-[#2d3e8c]"
+                    ? "text-[#0A274E] hover:text-amber-500"
+                    : "text-white/90 hover:text-white"
                 }`}
               >
                 {link.label}
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-amber-400 group-hover:w-full transition-all duration-300 rounded-full" />
               </a>
             ))}
           </nav>
- 
+
           {/* CTA */}
           <div className="hidden md:flex">
             <a
               href={`https://wa.me/${phone || "6281234567890"}?text=Halo,%20saya%20ingin%20menyewa%20mobil`}
               target="_blank"
               rel="noopener noreferrer"
-              className={`text-sm font-black uppercase tracking-widest px-7 py-3.5 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg ${
-                isScrolled
-                  ? "bg-white text-[#1a2b5e] hover:bg-gray-100 hover:-translate-y-0.5"
-                  : "bg-[#2d3e8c] text-white hover:bg-[#1e2d6e] hover:-translate-y-0.5"
-              }`}
+              className="flex items-center gap-2.5 bg-[#0A274E] hover:bg-[#0d336a] text-white font-semibold text-[14px] px-6 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
             >
-              Hubungi Kami
+              <WhatsappLogo className="w-4 h-4" weight="fill" />
+              Hubungi Admin
             </a>
           </div>
- 
+
           {/* Mobile Toggle */}
           <button
             id="mobile-menu-toggle"
-            className={`md:hidden p-2 rounded-xl transition-all duration-300 ${
+            className={`md:hidden p-2 rounded-xl transition-colors ${
               isScrolled
-                ? "text-white hover:bg-white/10"
-                : "text-gray-600 hover:text-[#2d3e8c] hover:bg-gray-50"
+                ? "text-[#0A274E] hover:bg-slate-100"
+                : "text-white hover:bg-white/10"
             }`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
@@ -106,44 +107,35 @@ export default function Header({ phone }: { phone?: string | null }) {
           </button>
         </div>
       </div>
- 
+
       {/* Mobile Menu */}
       <div
         className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-          menuOpen ? "max-h-96 opacity-100 py-3" : "max-h-0 opacity-0 pointer-events-none"
-        } ${
-          isScrolled
-            ? "bg-[#1a2b5e] border-t border-white/10"
-            : "bg-white border-t border-gray-100"
+          menuOpen
+            ? "max-h-96 opacity-100 bg-white border-t border-gray-100 shadow-lg"
+            : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
-        <div className="px-6 flex flex-col gap-2">
+        <div className="px-6 py-4 flex flex-col gap-1">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className={`px-4 py-3 text-base font-bold uppercase tracking-wider rounded-xl transition-all duration-200 ${
-                isScrolled
-                  ? "text-white/80 hover:text-white hover:bg-white/10"
-                  : "text-gray-700 hover:text-[#2d3e8c] hover:bg-blue-50"
-              }`}
+              className="px-4 py-3 text-[15px] font-medium rounded-xl text-[#0A274E] hover:bg-slate-50 hover:text-amber-500 transition-all"
             >
               {link.label}
             </a>
           ))}
-          <div className="mt-3 pt-3 border-t border-gray-100/10">
+          <div className="mt-2 pt-3 border-t border-slate-100">
             <a
               href={`https://wa.me/${phone || "6281234567890"}?text=Halo,%20saya%20ingin%20menyewa%20mobil`}
               target="_blank"
               rel="noopener noreferrer"
-              className={`block text-center text-base font-black uppercase tracking-widest px-6 py-4 rounded-xl shadow-md ${
-                isScrolled
-                  ? "bg-white text-[#1a2b5e] hover:bg-gray-100"
-                  : "bg-[#2d3e8c] text-white hover:bg-[#1e2d6e]"
-              }`}
+              className="flex items-center justify-center gap-2 w-full text-[15px] font-semibold px-6 py-3.5 rounded-full bg-[#0A274E] hover:bg-[#0d336a] text-white transition-all"
             >
-              Hubungi Kami
+              <WhatsappLogo className="w-4 h-4" weight="fill" />
+              Hubungi Admin
             </a>
           </div>
         </div>

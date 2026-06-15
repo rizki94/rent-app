@@ -1,28 +1,12 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Geist_Mono } from "next/font/google";
+import { Poppins, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const proximaNova = localFont({
-  src: [
-    {
-      path: "../public/ProximaNova/ProximaNovaRegular/ProximaNovaRegular.woff",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../public/ProximaNova/ProximaNovaBold/ProximaNovaBold.woff",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../public/ProximaNova/ProximaNovaBlack/ProximaNovaBlack.woff",
-      weight: "900",
-      style: "normal",
-    },
-  ],
+const poppins = Poppins({
+  subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 const geistMono = Geist_Mono({
@@ -102,7 +86,7 @@ export default function RootLayout({
       className={cn(
         "h-full",
         "antialiased",
-        proximaNova.variable,
+        poppins.variable,
         geistMono.variable,
         "font-sans",
       )}

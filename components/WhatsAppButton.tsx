@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChatCircleDots } from "@phosphor-icons/react";
+import { WhatsappLogoIcon } from "@phosphor-icons/react";
 
 export default function WhatsAppButton({ phone }: { phone?: string | null }) {
   const [visible, setVisible] = useState(false);
@@ -52,7 +52,7 @@ export default function WhatsAppButton({ phone }: { phone?: string | null }) {
           </>
         )}
         <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300">
-          <ChatCircleDots className="w-7 h-7 text-white" weight="fill" />
+          <WhatsappLogoIcon className="w-7 h-7 text-white" weight="fill" />
         </div>
       </div>
     </a>

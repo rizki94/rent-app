@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Star, CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { useState, useEffect } from "react";
+import { Star, CaretLeft, CaretRight, Quotes } from "@phosphor-icons/react";
 
 interface TestimonialType {
   id: number;
@@ -12,34 +12,44 @@ interface TestimonialType {
 
 const defaultTestimonials = [
   {
-    name: "Andi",
+    id: 1,
+    name: "Andi Pratama",
     comment:
       "Pelayanannya cepat dan responsif. Mobil yang datang bersih, nyaman, dan sesuai dengan foto. Proses booking juga mudah. Recommended!",
     stars: 5,
+    initial: "A",
   },
   {
-    name: "Rina",
+    id: 2,
+    name: "Rina Wulandari",
     comment:
       "Sewa Avanza untuk perjalanan keluarga ke Garut. Kondisi mobil sangat baik dan tidak ada kendala selama perjalanan. Pasti akan menggunakan jasa rental ini lagi.",
     stars: 5,
+    initial: "R",
   },
   {
-    name: "Dedi",
+    id: 3,
+    name: "Dedi Kurniawan",
     comment:
       "Sudah beberapa kali rental di sini dan selalu puas. Harga sesuai, unit bersih, dan admin cepat merespon.",
     stars: 5,
+    initial: "D",
   },
   {
-    name: "Sari",
+    id: 4,
+    name: "Sari Indah",
     comment:
       "Sangat puas dengan pelayanan Adhitama89! Mobil tepat waktu, kondisi prima, dan harga sangat terjangkau. Sudah rekomendasikan ke teman-teman.",
     stars: 5,
+    initial: "S",
   },
   {
-    name: "Budi",
+    id: 5,
+    name: "Budi Santoso",
     comment:
       "Booking lewat WA sangat mudah. Armada bersih terawat. Pas banget untuk perjalanan bisnis ke luar kota. Terima kasih Adhitama89!",
     stars: 5,
+    initial: "B",
   },
 ];
 
@@ -47,114 +57,135 @@ interface WhyUsSectionProps {
   initialTestimonials?: TestimonialType[];
 }
 
-export default function WhyUsSection({
-  initialTestimonials,
-}: WhyUsSectionProps) {
+export default function WhyUsSection({ initialTestimonials }: WhyUsSectionProps) {
   const [page, setPage] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const testimonials =
     initialTestimonials && initialTestimonials.length > 0
-      ? initialTestimonials
+      ? initialTestimonials.map((t, i) => ({
+          ...t,
+          initial: t.name.charAt(0).toUpperCase(),
+        }))
       : defaultTestimonials;
 
-  const perPage = 3;
+  const perPage = !isMounted ? 3 : isMobile ? 1 : 3;
   const totalPages = Math.ceil(testimonials.length / perPage);
-  const visible = testimonials.slice(page * perPage, page * perPage + perPage);
+  const activePage = Math.min(page, Math.max(0, totalPages - 1));
+  const visible = testimonials.slice(activePage * perPage, activePage * perPage + perPage);
+
+  const avatarColors = [
+    "bg-blue-600",
+    "bg-violet-600",
+    "bg-emerald-600",
+    "bg-amber-500",
+    "bg-rose-600",
+  ];
 
   return (
-    <section id="testimoni" className="py-20 bg-white relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div className="text-center mb-16 select-none">
-          <div className="inline-flex items-center gap-1.5 bg-[#2d3e8c]/5 border border-[#2d3e8c]/10 px-4.5 py-2 rounded-full mb-4">
-            <span className="text-[#2d3e8c] font-black text-xs sm:text-sm uppercase tracking-widest">
-              Ulasan Pelanggan
-            </span>
-          </div>
-          <h2 className="text-5xl sm:text-6xl font-black italic text-[#2d3e8c] mb-4 tracking-tight">
-            Apa Kata Mereka?
+    <section id="testimoni" className="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-amber-50 rounded-full blur-[150px] opacity-50 pointer-events-none -translate-y-1/2 translate-x-1/3" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header */}
+        <div className="mb-16 text-center">
+          <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-amber-500 mb-4">
+            Ulasan Pelanggan
+          </span>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-[#0A274E] mb-5">
+            Kata Mereka
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-[#2d3e8c] mx-auto mb-4" />
-          <p className="text-gray-500 text-lg sm:text-xl max-w-3xl mx-auto">
-            Dengarkan pengalaman nyata dari pelanggan setia kami yang telah menggunakan jasa sewa mobil Adhitama89.
+          <div className="w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-500 mx-auto rounded-full mb-5" />
+          <p className="text-gray-500 text-base max-w-lg mx-auto">
+            Ribuan pelanggan telah mempercayakan perjalanan mereka kepada Adhitama89.
           </p>
         </div>
- 
-        {/* Carousel */}
-        <div className="relative flex items-center gap-4">
-          {/* Prev */}
-          <button
-            onClick={() => setPage((p) => Math.max(0, p - 1))}
-            disabled={page === 0}
-            aria-label="Previous testimonial"
-            className="shrink-0 w-11 h-11 rounded-2xl border border-slate-100 bg-white shadow-sm flex items-center justify-center text-gray-600 hover:border-[#2d3e8c] hover:text-[#2d3e8c] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
-          >
-            <CaretLeft className="w-5 h-5" weight="bold" />
-          </button>
- 
-          {/* Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
-            {visible.map((t, index) => (
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 mb-10">
+          {visible.map((t, index) => {
+            const colorClass = avatarColors[t.id % avatarColors.length];
+            const initial = (t as (typeof defaultTestimonials)[0]).initial || t.name.charAt(0);
+            return (
               <div
-                key={t.name + "-" + index}
-                className="bg-white border border-slate-100 rounded-3xl p-8 flex flex-col justify-between items-start text-left relative overflow-hidden shadow-sm hover:shadow-md transition-shadow min-h-60"
+                key={t.id}
+                className="group bg-white rounded-2xl p-7 flex flex-col border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
               >
-                {/* Decorative Giant Quote */}
-                <span className="absolute -top-4 -right-1 text-slate-100 font-serif text-[130px] leading-none pointer-events-none select-none font-bold opacity-75">
-                  &ldquo;
-                </span>
+                {/* Big quote icon decoration */}
+                <Quotes
+                  className="absolute top-4 right-5 w-10 h-10 text-slate-100 group-hover:text-amber-100 transition-colors duration-300"
+                  weight="fill"
+                />
 
-                <div className="relative z-10 w-full flex flex-col justify-between h-full">
-                  <div>
-                    {/* Stars */}
-                    <div className="flex gap-0.5 mb-5">
-                      {Array.from({ length: t.stars }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-4.5 h-4.5 text-amber-400"
-                          weight="fill"
-                        />
-                      ))}
-                    </div>
-                    
-                    {/* Comment */}
-                    <p className="text-gray-600 text-base leading-relaxed mb-6 italic">
-                      &ldquo;{t.comment}&rdquo;
-                    </p>
+                {/* Stars */}
+                <div className="flex gap-1 mb-5">
+                  {Array.from({ length: t.stars }).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-amber-400" weight="fill" />
+                  ))}
+                </div>
+
+                {/* Comment */}
+                <p className="text-gray-600 text-[14px] leading-relaxed mb-6 flex-1 italic">
+                  &ldquo;{t.comment}&rdquo;
+                </p>
+
+                {/* Author */}
+                <div className="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100">
+                  <div className={`w-10 h-10 rounded-full ${colorClass} flex items-center justify-center text-white font-bold text-sm shrink-0`}>
+                    {initial}
                   </div>
-
-                  {/* Customer Name */}
-                  <h3 className="text-gray-900 font-black text-lg uppercase tracking-wider mt-auto border-t border-slate-50 pt-4 w-full">
-                    {t.name}
-                  </h3>
+                  <div>
+                    <p className="text-[#0A274E] font-bold text-[15px] leading-none mb-1">{t.name}</p>
+                    <p className="text-gray-400 text-[12px]">Customer Adhitama89</p>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
- 
-          {/* Next */}
-          <button
-            onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-            disabled={page >= totalPages - 1}
-            aria-label="Next testimonial"
-            className="shrink-0 w-11 h-11 rounded-2xl border border-slate-100 bg-white shadow-sm flex items-center justify-center text-gray-600 hover:border-[#2d3e8c] hover:text-[#2d3e8c] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
-          >
-            <CaretRight className="w-5 h-5" weight="bold" />
-          </button>
+            );
+          })}
         </div>
- 
-        {/* Dots */}
+
+        {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center gap-2.5 mt-10">
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setPage(i)}
-                aria-label={`Testimonial page ${i + 1}`}
-                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  i === page ? "bg-[#2d3e8c] w-8 shadow-sm" : "bg-gray-300 w-2.5 hover:bg-gray-400"
-                }`}
-              />
-            ))}
+          <div className="flex items-center justify-center gap-4">
+            <button
+              onClick={() => setPage(Math.max(0, activePage - 1))}
+              disabled={activePage === 0}
+              aria-label="Previous"
+              className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#0A274E] hover:border-[#0A274E] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
+            >
+              <CaretLeft className="w-4 h-4" weight="bold" />
+            </button>
+
+            <div className="flex gap-2">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPage(i)}
+                  aria-label={`Page ${i + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    i === activePage ? "bg-[#0A274E] w-8" : "bg-gray-300 w-2 hover:bg-gray-400"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={() => setPage(Math.min(totalPages - 1, activePage + 1))}
+              disabled={activePage >= totalPages - 1}
+              aria-label="Next"
+              className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#0A274E] hover:border-[#0A274E] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
+            >
+              <CaretRight className="w-4 h-4" weight="bold" />
+            </button>
           </div>
         )}
       </div>

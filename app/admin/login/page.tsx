@@ -28,7 +28,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-tr from-[#0f1d45] via-[#1a2b5e] to-[#2d3e8c] px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-tr from-[#0f1d45] via-[#1a2b5e] to-[#1B69F4] px-4 py-12">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent_40%)] pointer-events-none" />
 
       <div className="relative w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-8 sm:p-10">

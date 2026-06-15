@@ -1,8 +1,13 @@
+"use client";
+
 import {
   WhatsappLogo,
   InstagramLogo,
   TiktokLogo,
+  EnvelopeSimple,
   MapPin,
+  Clock,
+  ArrowRight,
 } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 
@@ -18,12 +23,22 @@ interface FooterProps {
   config?: WebConfigType | null;
 }
 
+const navLinks = [
+  { label: "Price List", href: "#cars" },
+  { label: "Layanan", href: "#layanan" },
+  { label: "Tentang Kami", href: "#about" },
+  { label: "Testimoni", href: "#testimoni" },
+  { label: "FAQ", href: "#faq" },
+];
+
 export default function Footer({ config }: FooterProps) {
   const displayPhone = config?.phone
     ? config.phone.startsWith("62")
       ? "0" + config.phone.slice(2)
       : config.phone
-    : "0812-3456-7890";
+    : "081234567890";
+
+  const waPhone = config?.phone || "6281234567890";
 
   const instagramLink = config?.instagramAccount
     ? `https://instagram.com/${config.instagramAccount.replace("@", "")}`
@@ -35,102 +50,159 @@ export default function Footer({ config }: FooterProps) {
 
   const mapUrl =
     config?.mapPinPoint ||
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.558806684784!2d107.6622432!3d-6.943187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e7c1b2c4554b%3A0xe54e6fa3a992a9f2!2sBandung%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1718058216822!5m2!1sen!2sid";
+    "https://maps.google.com/maps?q=adhitama89+rental+bandung&t=m&z=15&output=embed&iwloc=near";
 
   return (
-    <footer id="contact" className="bg-[#0b132b] text-white border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          {/* Left Columns (Logo & Brand / Info / Social) - taking 6 spans */}
-          <div className="lg:col-span-6 space-y-8">
-            {/* Logo */}
-            <div>
+    <footer id="contact" className="w-full">
+      {/* Main footer body */}
+      <div className="bg-[#0A274E] text-white pt-20 pb-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
+
+            {/* Brand column */}
+            <div className="lg:col-span-1">
               <Image
                 src="/logo-white.svg"
-                alt="Adhitama 89 Rental Car"
-                width={150}
-                height={66}
-                className="h-14 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                alt="Adhitama89 Rental"
+                width={160}
+                height={50}
+                className="h-12 w-auto object-contain mb-5"
+                onError={(e) => {
+                  // fallback to regular logo if white version doesn't exist
+                  (e.target as HTMLImageElement).src = "/logo.svg";
+                }}
               />
-            </div>
- 
-            <p className="text-white/60 text-base leading-relaxed max-w-md">
-              Perjalanan Anda lebih nyaman, aman, dan tenang bersama layanan rental mobil Adhitama89 yang selalu siap melayani dengan armada premium terawat kapan saja.
-            </p>
- 
-            {/* Contact Details */}
-             <div className="space-y-4 pt-2">
-              <h3 className="font-bold text-white text-sm uppercase tracking-widest text-white/90">Kontak Hubungi</h3>
-              <div className="space-y-3">
-                <a
-                  href={`https://wa.me/${config?.phone || "6281234567890"}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-base text-white/70 hover:text-[#5bc0be] transition-colors"
-                >
-                  <WhatsappLogo className="w-5 h-5 shrink-0 text-[#5bc0be]" weight="fill" />
-                  <span className="font-semibold">{displayPhone}</span>
-                </a>
-                <div className="flex items-start gap-3 text-base text-white/70">
-                  <MapPin className="w-5 h-5 shrink-0 mt-0.5 text-blue-400" weight="fill" />
-                  <span>{config?.address || "Jl. Turangga Barat Baru No.4, Lkr. Sel., Kec. Lengkong, Kota Bandung, Jawa Barat 40263"}</span>
-                </div>
-              </div>
-            </div>
- 
-            {/* Social Links */}
-            <div className="space-y-3">
-              <h3 className="font-bold text-white text-sm uppercase tracking-widest text-white/90">Ikuti Sosial Media</h3>
-              <div className="flex gap-4">
+              <p className="text-white/55 text-[14px] leading-relaxed mb-6">
+                Solusi transportasi terpercaya di Bandung sejak 2016. Armada terawat, harga bersahabat, pelayanan 24 jam.
+              </p>
+              {/* Social icons */}
+              <div className="flex gap-3">
                 <a
                   href={instagramLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-[#e1306c] hover:border-transparent transition-all duration-300 hover:scale-110"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-gradient-to-br hover:from-pink-500 hover:to-orange-400 flex items-center justify-center text-white/70 hover:text-white transition-all duration-300"
                 >
-                  <InstagramLogo className="w-5 h-5" weight="fill" />
+                  <InstagramLogo className="w-4 h-4" weight="fill" />
                 </a>
                 <a
                   href={tiktokLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TikTok"
-                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-black hover:border-transparent transition-all duration-300 hover:scale-110"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-black flex items-center justify-center text-white/70 hover:text-white transition-all duration-300"
                 >
-                  <TiktokLogo className="w-5 h-5" weight="fill" />
+                  <TiktokLogo className="w-4 h-4" weight="fill" />
+                </a>
+                <a
+                  href={`https://wa.me/${waPhone}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-green-500 flex items-center justify-center text-white/70 hover:text-white transition-all duration-300"
+                >
+                  <WhatsappLogo className="w-4 h-4" weight="fill" />
                 </a>
               </div>
             </div>
-          </div>
- 
-          {/* Right Column (Google Maps embed) - taking 6 spans */}
-          <div className="lg:col-span-6 w-full">
-            <div className="rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 h-80 lg:h-[360px] min-h-[300px]">
-              <iframe
-                title="Lokasi Adhitama89"
-                src={mapUrl}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+
+            {/* Quick links */}
+            <div>
+              <h3 className="text-white font-bold text-[16px] mb-5 pb-3 border-b border-white/10">
+                Menu
+              </h3>
+              <ul className="space-y-3">
+                {navLinks.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="flex items-center gap-2 text-white/55 hover:text-amber-400 text-[14px] transition-colors duration-200 group"
+                    >
+                      <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200" weight="bold" />
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
+
+            {/* Contact */}
+            <div>
+              <h3 className="text-white font-bold text-[16px] mb-5 pb-3 border-b border-white/10">
+                Kontak
+              </h3>
+              <ul className="space-y-4">
+                <li>
+                  <a
+                    href="mailto:admin@adhitama89rental.com"
+                    className="flex items-start gap-3 text-white/55 hover:text-white transition-colors group"
+                  >
+                    <EnvelopeSimple className="w-4 h-4 mt-0.5 text-amber-400 shrink-0" weight="fill" />
+                    <span className="text-[13px]">admin@adhitama89rental.com</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={`https://wa.me/${waPhone}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-3 text-white/55 hover:text-white transition-colors"
+                  >
+                    <WhatsappLogo className="w-4 h-4 mt-0.5 text-amber-400 shrink-0" weight="fill" />
+                    <span className="text-[13px]">{displayPhone}</span>
+                  </a>
+                </li>
+                <li>
+                  <div className="flex items-start gap-3 text-white/55">
+                    <MapPin className="w-4 h-4 mt-0.5 text-amber-400 shrink-0" weight="fill" />
+                    <span className="text-[13px] leading-relaxed">
+                      {config?.address ||
+                        "Jl. Turangga Barat Baru No.4, Lkr. Sel., Kec. Lengkong, Kota Bandung, Jawa Barat 40263"}
+                    </span>
+                  </div>
+                </li>
+                <li>
+                  <div className="flex items-center gap-3 text-white/55">
+                    <Clock className="w-4 h-4 text-amber-400 shrink-0" weight="fill" />
+                    <span className="text-[13px]">Buka 24 Jam / 7 Hari</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Map */}
+            <div>
+              <h3 className="text-white font-bold text-[16px] mb-5 pb-3 border-b border-white/10">
+                Lokasi
+              </h3>
+              <div className="w-full h-48 rounded-2xl overflow-hidden ring-1 ring-white/10">
+                <iframe
+                  src={mapUrl}
+                  className="w-full h-full border-0 grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition-all duration-500"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Lokasi Adhitama89"
+                />
+              </div>
+            </div>
+
           </div>
-        </div>
- 
-        {/* Bottom copyright bar */}
-        <div className="border-t border-white/10 mt-16 pt-8 text-center flex flex-col sm:flex-row justify-between items-center gap-4 text-white/40">
-          <p className="text-sm">
-            © {new Date().getFullYear()} Adhitama 89 Rental Car. Semua hak dilindungi.
-          </p>
-          <div className="flex gap-6 text-xs sm:text-sm font-bold uppercase tracking-wider">
-            <a href="#cars" className="hover:text-white transition-colors">Armada</a>
-            <a href="#layanan" className="hover:text-white transition-colors">Layanan</a>
-            <a href="#testimoni" className="hover:text-white transition-colors">Testimoni</a>
-            <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+
+          {/* Divider */}
+          <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-white/35 text-[13px] text-center sm:text-left">
+              © {new Date().getFullYear()} Adhitama89 Rental. Semua hak dilindungi.
+            </p>
+            <a
+              href={`https://wa.me/${waPhone}?text=Halo%20Adhitama89!%20Saya%20ingin%20booking%20kendaraan`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-[#0A274E] font-bold text-[13px] px-5 py-2.5 rounded-full transition-all hover:shadow-lg"
+            >
+              <WhatsappLogo className="w-4 h-4" weight="fill" />
+              Booking Sekarang
+            </a>
           </div>
         </div>
       </div>
