@@ -47,6 +47,22 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* ── Theme color tokens → registered as Tailwind utilities ── */
+  /* When page loads, :root vars (--t-*) are injected by the active theme.  */
+  /* @theme inline makes Tailwind generate bg-tp, text-ta, etc. from them.  */
+  --color-tp:       var(--t-primary,       #0A274E);
+  --color-tp-dark:  var(--t-primary-dark,  #071c38);
+  --color-ta:       var(--t-accent,        #F59E0B);
+  --color-ta-fg:    var(--t-accent-fg,     #0A274E);
+  --color-tf-bg:    var(--t-footer-bg,     #0A274E);
+  --color-tf-text:  var(--t-footer-text,   #FFFFFF);
+  --color-th-from:  var(--t-hero-from,     #0A274E);
+  --color-th-to:    var(--t-hero-to,       #0d336a);
+  --color-th-text:  var(--t-hero-text,     #FFFFFF);
+
+  /* ── Theme radius token ── */
+  --radius-theme: var(--t-radius, 0.75rem);
 }
 
 :root {
@@ -126,12 +142,16 @@
     @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: var(--t-font-body), var(--font-sans), sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--t-font-heading), var(--font-sans), sans-serif;
   }
   html {
-    @apply font-sans scroll-smooth;
+    @apply scroll-smooth;
   }
   ::selection {
-    background-color: #0A274E;
+    background-color: var(--t-primary, #0A274E);
     color: #ffffff;
   }
   ::-webkit-scrollbar {
@@ -141,11 +161,11 @@
     background: #f1f5f9;
   }
   ::-webkit-scrollbar-thumb {
-    background: #0A274E;
+    background: var(--t-primary, #0A274E);
     border-radius: 99px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #FFC800;
+    background: var(--t-accent, #FFC800);
   }
 }
 
@@ -161,13 +181,14 @@
     100% { transform: scale(1.05); }
   }
   .animate-slow-zoom {
-    animation: slow-zoom 20s ease-in-out infinite;
+    animation: slow-zoom 20s infinite ease-in-out;
   }
 
-  /* Floating animation for decorative elements */
+  /* Float animation for decorative elements */
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
+    0%        { transform: translateY(0); }
     50%       { transform: translateY(-10px); }
+    100%      { transform: translateY(0); }
   }
   .animate-float {
     animation: float 6s ease-in-out infinite;
@@ -189,5 +210,102 @@
   .scrollbar-none {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* Stat icon container with theme color mix and hover transition */
+  .stat-icon-container {
+    background-color: color-mix(in srgb, var(--t-primary) 8%, transparent);
+    transition: all 0.3s ease-in-out;
+  }
+  .group:hover .stat-icon-container {
+    background-color: var(--t-primary) !important;
+  }
+
+  /* Premium 3D tilt/parallax image container */
+  .premium-tilt {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+  .premium-tilt:hover {
+    transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
+  }
+  .premium-tilt .inner-image {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .premium-tilt:hover .inner-image {
+    transform: scale(1.08) translateZ(15px);
+  }
+  .premium-tilt::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.25) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    z-index: 10;
+    pointer-events: none;
+  }
+  .premium-tilt:hover::before {
+    left: 150%;
+    transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* High-tech diagonal split-slice shift on hover */
+  .slice-split-container {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--t-accent, #F59E0B);
+  }
+  .slice-part {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .slice-part-1 {
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+  .slice-part-2 {
+    clip-path: polygon(100% 100%, 100% 0, 0 100%);
+  }
+  .slice-split-container:hover .slice-part-1 {
+    transform: translate(-6px, -6px) scale(0.97);
+  }
+  .slice-split-container:hover .slice-part-2 {
+    transform: translate(6px, 6px) scale(0.97);
+  }
+
+  /* ── Smooth Text Reveal Transitions ── */
+  .reveal-text {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+  .reveal-text.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Springy Text Jump Transitions ── */
+  .word-span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(28px) scale(0.85) rotate(3deg);
+    transition: opacity 0.75s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform, opacity;
+  }
+  .active .word-span {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
   }
 }

@@ -23,7 +23,10 @@ import {
   Star,
   UploadSimple,
   ArrowClockwise,
+  Palette,
+  CheckCircle,
 } from "@phosphor-icons/react";
+import { THEMES, ThemeKey } from "@/lib/themes";
 
 interface CarType {
   id: number;
@@ -52,6 +55,7 @@ interface WebConfigType {
   tiktokAccount: string | null;
   instagramAccount: string | null;
   mapPinPoint: string | null;
+  theme: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -79,6 +83,9 @@ export default function DashboardClient({
   const [testimonials, setTestimonials] =
     useState<TestimonialType[]>(initialTestimonials);
   const [config, setConfig] = useState<WebConfigType | null>(initialConfig);
+  const [selectedTheme, setSelectedTheme] = useState<ThemeKey>(
+    (initialConfig?.theme as ThemeKey) || "navy_gold"
+  );
 
   // Loading & Modals
   const [submitting, setSubmitting] = useState(false);
@@ -480,100 +487,180 @@ export default function DashboardClient({
 
         {/* Tab 3: Web Config */}
         {activeTab === "config" && (
-          <div className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-sm max-w-3xl">
-            <h2 className="text-2xl font-black text-[#1a2b5e] uppercase tracking-wide mb-2">
-              Konfigurasi Website
-            </h2>
-            <p className="text-gray-500 text-sm mb-8">
-              Informasi kontak, sosial media, dan alamat yang akan ditampilkan
-              di website.
-            </p>
-
-            <form onSubmit={handleConfigSubmit} className="space-y-6">
-              {config?.id && (
-                <input type="hidden" name="id" value={config.id} />
-              )}
-
-              <div>
-                <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
-                  Nomor WhatsApp (Phone)
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  required
-                  defaultValue={config?.phone || ""}
-                  placeholder="Format: 6281234567890 (Tanpa tanda +)"
-                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
-                />
+          <div className="space-y-8 max-w-3xl">
+            {/* Theme Picker Section */}
+            <div className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-sm">
+              <div className="flex items-center gap-3 mb-2">
+                <Palette className="w-6 h-6 text-[#1B69F4]" weight="fill" />
+                <h2 className="text-2xl font-black text-[#1a2b5e] uppercase tracking-wide">
+                  Tema Website
+                </h2>
               </div>
+              <p className="text-gray-500 text-sm mb-8">
+                Pilih tampilan visual website yang sesuai dengan karakter bisnis Anda. Perubahan akan langsung terlihat setelah disimpan.
+              </p>
 
-              <div>
-                <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
-                  Alamat Kantor
-                </label>
-                <textarea
-                  name="address"
-                  required
-                  rows={3}
-                  defaultValue={config?.address || ""}
-                  placeholder="Masukkan alamat lengkap kantor rental mobil"
-                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all resize-none"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {(Object.values(THEMES) as (typeof THEMES)[ThemeKey][]).map((theme) => {
+                  const isActive = selectedTheme === theme.key;
+                  return (
+                    <button
+                      key={theme.key}
+                      type="button"
+                      onClick={() => setSelectedTheme(theme.key)}
+                      className={`relative text-left rounded-2xl border-2 overflow-hidden transition-all duration-200 cursor-pointer group ${
+                        isActive
+                          ? "border-[#1B69F4] shadow-lg shadow-blue-100 scale-[1.02]"
+                          : "border-gray-100 hover:border-gray-300 hover:shadow-md"
+                      }`}
+                    >
+                      {/* Color swatch preview */}
+                      <div
+                        className="h-20 w-full relative flex items-end p-3"
+                        style={{
+                          background: `linear-gradient(135deg, ${theme.colors.heroFrom}, ${theme.colors.heroTo})`,
+                        }}
+                      >
+                        {/* Accent dot strip */}
+                        <div className="flex gap-1.5">
+                          <div
+                            className="h-3 w-3 rounded-full border border-white/40"
+                            style={{ background: theme.colors.accent }}
+                          />
+                          <div
+                            className="h-3 w-10 rounded-full opacity-60"
+                            style={{ background: theme.colors.heroText }}
+                          />
+                          <div
+                            className="h-3 w-6 rounded-full opacity-30"
+                            style={{ background: theme.colors.heroText }}
+                          />
+                        </div>
+
+                        {/* Checkmark for active */}
+                        {isActive && (
+                          <div className="absolute top-2.5 right-2.5">
+                            <CheckCircle
+                              className="w-6 h-6 text-white drop-shadow"
+                              weight="fill"
+                            />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Info */}
+                      <div className="p-3 bg-white">
+                        <p className="font-black text-gray-900 text-sm">{theme.name}</p>
+                        <p className="text-gray-400 text-[11px] leading-relaxed mt-0.5 line-clamp-2">
+                          {theme.description}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
-                    Akun Instagram
-                  </label>
-                  <input
-                    type="text"
-                    name="instagramAccount"
-                    defaultValue={config?.instagramAccount || ""}
-                    placeholder="Contoh: @adhitama89"
-                    className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
-                    Akun TikTok
-                  </label>
-                  <input
-                    type="text"
-                    name="tiktokAccount"
-                    defaultValue={config?.tiktokAccount || ""}
-                    placeholder="Contoh: @adhitama89"
-                    className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
-                  />
-                </div>
+            {/* Contact & Info Config */}
+            <div className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-sm">
+              <div className="flex items-center gap-3 mb-2">
+                <Gear className="w-6 h-6 text-[#1B69F4]" weight="fill" />
+                <h2 className="text-2xl font-black text-[#1a2b5e] uppercase tracking-wide">
+                  Konfigurasi Website
+                </h2>
               </div>
+              <p className="text-gray-500 text-sm mb-8">
+                Informasi kontak, sosial media, dan alamat yang akan ditampilkan di website.
+              </p>
 
-              <div>
-                <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
-                  Google Maps Embed URL
-                </label>
-                <textarea
-                  name="mapPinPoint"
-                  rows={4}
-                  defaultValue={config?.mapPinPoint || ""}
-                  placeholder="Salin iframe src dari Google Maps share menu (contoh: https://www.google.com/maps/embed?...)"
-                  className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all text-xs"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={submitting}
-                className="bg-[#1B69F4] hover:bg-[#1e2d6e] disabled:bg-gray-400 text-white font-black text-sm uppercase tracking-widest px-8 py-3.5 rounded-xl transition-colors cursor-pointer shadow-md flex items-center justify-center gap-2"
-              >
-                {submitting && (
-                  <ArrowClockwise className="animate-spin w-4 h-4" />
+              <form onSubmit={handleConfigSubmit} className="space-y-6">
+                {config?.id && (
+                  <input type="hidden" name="id" value={config.id} />
                 )}
-                {submitting ? "Menyimpan..." : "Simpan Konfigurasi"}
-              </button>
-            </form>
+                {/* Hidden input carries selectedTheme value */}
+                <input type="hidden" name="theme" value={selectedTheme} />
+
+                <div>
+                  <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
+                    Nomor WhatsApp (Phone)
+                  </label>
+                  <input
+                    type="text"
+                    name="phone"
+                    required
+                    defaultValue={config?.phone || ""}
+                    placeholder="Format: 6281234567890 (Tanpa tanda +)"
+                    className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
+                    Alamat Kantor
+                  </label>
+                  <textarea
+                    name="address"
+                    required
+                    rows={3}
+                    defaultValue={config?.address || ""}
+                    placeholder="Masukkan alamat lengkap kantor rental mobil"
+                    className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all resize-none"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
+                      Akun Instagram
+                    </label>
+                    <input
+                      type="text"
+                      name="instagramAccount"
+                      defaultValue={config?.instagramAccount || ""}
+                      placeholder="Contoh: @adhitama89"
+                      className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
+                      Akun TikTok
+                    </label>
+                    <input
+                      type="text"
+                      name="tiktokAccount"
+                      defaultValue={config?.tiktokAccount || ""}
+                      placeholder="Contoh: @adhitama89"
+                      className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 text-sm font-bold uppercase tracking-wider mb-2">
+                    Google Maps Embed URL
+                  </label>
+                  <textarea
+                    name="mapPinPoint"
+                    rows={4}
+                    defaultValue={config?.mapPinPoint || ""}
+                    placeholder="Salin iframe src dari Google Maps share menu (contoh: https://www.google.com/maps/embed?...)"
+                    className="w-full border border-gray-200 focus:border-[#1B69F4] focus:ring-1 focus:ring-[#1B69F4] rounded-xl px-4 py-3 outline-none text-gray-900 transition-all text-xs"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="bg-[#1B69F4] hover:bg-[#1e2d6e] disabled:bg-gray-400 text-white font-black text-sm uppercase tracking-widest px-8 py-3.5 rounded-xl transition-colors cursor-pointer shadow-md flex items-center justify-center gap-2"
+                >
+                  {submitting && (
+                    <ArrowClockwise className="animate-spin w-4 h-4" />
+                  )}
+                  {submitting ? "Menyimpan..." : "Simpan Konfigurasi & Tema"}
+                </button>
+              </form>
+            </div>
           </div>
         )}
       </main>

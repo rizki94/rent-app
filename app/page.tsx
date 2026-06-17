@@ -8,6 +8,8 @@ import CarListSection from "@/components/CarListSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import WhyUsSection from "@/components/WhyUsSection";
 import FAQSection from "@/components/FAQSection";
+import ParallaxBannerSection from "@/components/ParallaxBannerSection";
+import SliceFlipBanner from "@/components/SliceFlipBanner";
 
 import { db } from "@/lib/db";
 import {
@@ -15,6 +17,7 @@ import {
   testimonials as testimonialsTable,
   webConfig as webConfigTable,
 } from "@/lib/db/schema";
+import { getTheme, buildThemeCSSVars } from "@/lib/themes";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +27,10 @@ export default async function Home() {
   const testimonials = await db.select().from(testimonialsTable);
   const configList = await db.select().from(webConfigTable);
   const config = configList[0] || null;
+
+  // Resolve active theme
+  const activeTheme = getTheme(config?.theme);
+  const themeCSSVars = buildThemeCSSVars(activeTheme);
 
   const schemaOrg = {
     "@context": "https://schema.org",
@@ -65,6 +72,13 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
+      {/* Inject Google Fonts for the active theme */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="stylesheet" href={activeTheme.font.googleImport} />
+      {/* Inject theme CSS variables into :root */}
+      <style dangerouslySetInnerHTML={{ __html: `:root { ${themeCSSVars} }` }} />
+
       <Header phone={config?.phone} />
       <main>
         {/* 1. Hero — Dark navy, yellow CTA, stats */}
@@ -73,13 +87,17 @@ export default async function Home() {
         <AboutUsSection />
         {/* 3. Kenapa Harus Kami — Dark navy cards */}
         <WhyUsFeatureSection />
-        {/* 4. Price List / Armada — Light gray bg, white cards */}
+        {/* 4. Parallax Banner — Scroll-driven parallax + slice-flip headline */}
+        <ParallaxBannerSection phone={config?.phone} />
+        {/* 5. Price List / Armada — Light gray bg, white cards */}
         <CarListSection initialCars={cars} phone={config?.phone} />
-        {/* 5. Fasilitas & Layanan — White bg, icon cards */}
+        {/* 6. Fasilitas & Layanan — White bg, icon cards */}
         <FeaturesSection />
-        {/* 6. Testimoni — Light gray bg, white quote cards */}
+        {/* 7. Slice-Flip Image Banner — 3-panel cinematic reveal */}
+        <SliceFlipBanner phone={config?.phone} />
+        {/* 8. Testimoni — Light gray bg, white quote cards */}
         <WhyUsSection initialTestimonials={testimonials} />
-        {/* 7. FAQ — White bg, custom accordion */}
+        {/* 9. FAQ — White bg, custom accordion */}
         <FAQSection />
       </main>
       <Footer config={config} />

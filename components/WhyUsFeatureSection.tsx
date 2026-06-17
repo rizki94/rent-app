@@ -44,13 +44,25 @@ export default function WhyUsFeatureSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="mb-16 text-center">
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-amber-500 mb-4">
+          <span
+            className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-4"
+            style={{ color: "var(--t-accent)" }}
+          >
             Keunggulan Kami
           </span>
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-[#0A274E] mb-5">
+          <h2
+            className="text-4xl sm:text-5xl font-extrabold mb-5"
+            style={{ color: "var(--t-primary)" }}
+          >
             Kenapa Harus Kami?
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-500 mx-auto rounded-full" />
+          <div
+            className="w-16 h-1 mx-auto rounded-full"
+            style={{
+              background:
+                "linear-gradient(to right, var(--t-accent), color-mix(in srgb, var(--t-accent) 80%, white 20%))",
+            }}
+          />
         </div>
 
         {/* Cards */}
@@ -58,18 +70,36 @@ export default function WhyUsFeatureSection() {
           {whyUs.map((item, idx) => (
             <div
               key={item.title}
-              className={`group rounded-2xl border p-7 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ${item.accent}`}
+              className={`group relative border p-7 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 ${item.accent} overflow-hidden`}
+              style={{ borderRadius: "var(--t-radius, 1rem)" }}
             >
-              <div className={`w-14 h-14 rounded-2xl ${item.iconBg} flex items-center justify-center text-3xl mb-5`}>
+              {/* Diagonal gloss sweep */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden"
+                style={{ borderRadius: "inherit" }}>
+                <div className="absolute top-0 left-[-100%] w-2/3 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-20deg] group-hover:left-[150%] transition-all duration-700 ease-in-out" />
+              </div>
+
+              <div
+                className={`w-14 h-14 ${item.iconBg} flex items-center justify-center text-3xl mb-5 transition-transform duration-500 group-hover:scale-110`}
+                style={{ borderRadius: "calc(var(--t-radius, 1rem) * 0.8)" }}
+              >
                 {item.icon}
               </div>
-              <h3 className="text-[#0A274E] font-bold text-[18px] mb-3">{item.title}</h3>
-              <p className="text-gray-500 text-[14px] leading-relaxed">
-                {item.description}
-              </p>
-              <div className="mt-5 flex items-center gap-1.5 text-[#0A274E] text-[13px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h3 className="font-bold text-[18px] mb-3" style={{ color: "var(--t-primary)" }}>
+                {item.title}
+              </h3>
+              <p className="text-gray-500 text-[14px] leading-relaxed">{item.description}</p>
+              <div
+                className="mt-5 flex items-center gap-1.5 text-[13px] font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0"
+                style={{ color: "var(--t-primary)" }}
+              >
                 <span>0{idx + 1}</span>
-                <div className="flex-1 h-px bg-[#0A274E]/30" />
+                <div
+                  className="flex-1 h-px"
+                  style={{
+                    backgroundColor: "color-mix(in srgb, var(--t-primary) 30%, transparent)",
+                  }}
+                />
               </div>
             </div>
           ))}

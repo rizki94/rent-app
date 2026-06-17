@@ -55,20 +55,36 @@ export default function FAQSection() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start">
           {/* Left: Header */}
           <div className="lg:col-span-2 lg:sticky lg:top-32">
-            <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-amber-500 mb-4">
+            <span
+              className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-4"
+              style={{ color: "var(--t-accent)" }}
+            >
               FAQ
             </span>
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-[#0A274E] leading-[1.15] mb-5">
+            <h2
+              className="text-4xl sm:text-5xl font-extrabold leading-[1.15] mb-5"
+              style={{ color: "var(--t-primary)" }}
+            >
               Pertanyaan yang Sering Ditanyakan
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full mb-6" />
+            <div
+              className="w-16 h-1 rounded-full mb-6"
+              style={{
+                background:
+                  "linear-gradient(to right, var(--t-accent), color-mix(in srgb, var(--t-accent) 80%, white 20%))",
+              }}
+            />
             <p className="text-gray-500 text-base leading-relaxed mb-8">
               Tidak menemukan jawaban yang Anda cari? Hubungi kami langsung
               melalui WhatsApp.
             </p>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2.5 bg-[#0A274E] hover:bg-[#0d336a] text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2.5 text-white font-semibold px-7 py-3.5 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 hover:brightness-90"
+              style={{
+                backgroundColor: "var(--t-primary)",
+                borderRadius: "calc(var(--t-radius, 1rem) * 1.5)",
+              }}
             >
               <ChatCircle className="w-5 h-5" weight="fill" />
               Tanya Sekarang
@@ -82,27 +98,31 @@ export default function FAQSection() {
               return (
                 <div
                   key={index}
-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                    isOpen
-                      ? "border-[#0A274E]/20 shadow-md bg-white"
-                      : "border-gray-100 bg-gray-50/50 hover:bg-white hover:border-gray-200 hover:shadow-sm"
-                  }`}
+                  className="border transition-all duration-300 overflow-hidden bg-white/50"
+                  style={{
+                    borderRadius: "var(--t-radius, 1rem)",
+                    borderColor: isOpen
+                      ? "color-mix(in srgb, var(--t-primary) 20%, transparent)"
+                      : "#f3f4f6",
+                    boxShadow: isOpen ? "0 4px 6px -1px rgb(0 0 0 / 0.05)" : "none",
+                  }}
                 >
                   <button
-                    className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none"
+                    className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none cursor-pointer"
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                   >
                     <span
-                      className={`font-semibold text-[15px] pr-6 transition-colors ${isOpen ? "text-[#0A274E]" : "text-gray-700"}`}
+                      className="font-semibold text-[15px] pr-6 transition-colors"
+                      style={{ color: isOpen ? "var(--t-primary)" : "#374151" }}
                     >
                       {faq.question}
                     </span>
                     <span
-                      className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-                        isOpen
-                          ? "bg-[#0A274E] text-white"
-                          : "bg-gray-100 text-gray-500"
-                      }`}
+                      className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
+                      style={{
+                        backgroundColor: isOpen ? "var(--t-primary)" : "#f3f4f6",
+                        color: isOpen ? "#ffffff" : "#6b7280",
+                      }}
                     >
                       {isOpen ? (
                         <Minus className="w-4 h-4" weight="bold" />

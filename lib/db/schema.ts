@@ -28,6 +28,7 @@ export const webConfig = pgTable("web_config", {
   tiktokAccount: text("tiktok_account"),
   instagramAccount: text("instagram_account"),
   mapPinPoint: text("map_pin_point"),
+  theme: text("theme").default("navy_gold"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

@@ -143,13 +143,25 @@ export default function WhyUsSection({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="mb-16 text-center">
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-amber-500 mb-4">
+          <span
+            className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-4"
+            style={{ color: "var(--t-accent)" }}
+          >
             Ulasan Pelanggan
           </span>
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-[#0A274E] mb-5">
+          <h2
+            className="text-4xl sm:text-5xl font-extrabold mb-5"
+            style={{ color: "var(--t-primary)" }}
+          >
             Kata Mereka
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-500 mx-auto rounded-full mb-5" />
+          <div
+            className="w-16 h-1 mx-auto rounded-full mb-5"
+            style={{
+              background:
+                "linear-gradient(to right, var(--t-accent), color-mix(in srgb, var(--t-accent) 80%, white 20%))",
+            }}
+          />
           <p className="text-gray-500 text-base max-w-lg mx-auto">
             Ribuan pelanggan telah mempercayakan perjalanan mereka kepada
             Adhitama89.
@@ -164,12 +176,19 @@ export default function WhyUsSection({
             return (
               <div
                 key={t.id}
-                className="group bg-white rounded-2xl p-7 flex flex-col border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
+                className="group bg-white p-7 flex flex-col border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
+                style={{ borderRadius: "var(--t-radius, 1rem)" }}
               >
+                {/* Gloss sweep on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden" style={{ borderRadius: "inherit" }}>
+                  <div className="absolute top-0 left-[-100%] w-2/3 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:left-[150%] transition-all duration-700 ease-in-out" />
+                </div>
+
                 {/* Big quote icon decoration */}
                 <Quotes
-                  className="absolute top-4 right-5 w-10 h-10 text-slate-100 group-hover:text-amber-100 transition-colors duration-300"
+                  className="absolute top-4 right-5 w-10 h-10 transition-all duration-500 group-hover:scale-110"
                   weight="fill"
+                  style={{ color: "color-mix(in srgb, var(--t-accent) 15%, #f1f5f9)" }}
                 />
 
                 {/* Stars */}
@@ -177,26 +196,28 @@ export default function WhyUsSection({
                   {Array.from({ length: t.stars }).map((_, i) => (
                     <Star
                       key={i}
-                      className="w-4 h-4 text-amber-400"
+                      className="w-4 h-4"
                       weight="fill"
+                      style={{ color: "var(--t-accent)" }}
                     />
                   ))}
                 </div>
 
                 {/* Comment */}
-                <p className="text-gray-600 text-[14px] leading-relaxed mb-6 flex-1 italic">
+                <p className="text-gray-600 text-[14px] leading-relaxed mb-6 flex-1 italic relative z-10">
                   &ldquo;{t.comment}&rdquo;
                 </p>
 
                 {/* Author */}
-                <div className="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100">
+                <div className="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100 relative z-10">
                   <div
-                    className={`w-10 h-10 rounded-full ${colorClass} flex items-center justify-center text-white font-bold text-sm shrink-0`}
+                    className={`w-10 h-10 ${colorClass} flex items-center justify-center text-white font-bold text-sm shrink-0`}
+                    style={{ borderRadius: "calc(var(--t-radius, 1rem) * 0.8)" }}
                   >
                     {initial}
                   </div>
                   <div>
-                    <p className="text-[#0A274E] font-bold text-[15px] leading-none mb-1">
+                    <p className="font-bold text-[15px] leading-none mb-1" style={{ color: "var(--t-primary)" }}>
                       {t.name}
                     </p>
                     <p className="text-gray-400 text-[12px]">
@@ -221,12 +242,19 @@ export default function WhyUsSection({
             return (
               <div
                 key={t.id}
-                className="w-[85vw] shrink-0 snap-center group bg-white rounded-2xl p-7 flex flex-col border border-gray-100 shadow-sm relative overflow-hidden"
+                className="w-[85vw] shrink-0 snap-center group bg-white p-7 flex flex-col border border-gray-100 shadow-sm relative overflow-hidden"
+                style={{ borderRadius: "var(--t-radius, 1rem)" }}
               >
+                {/* Gloss sweep on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden" style={{ borderRadius: "inherit" }}>
+                  <div className="absolute top-0 left-[-100%] w-2/3 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:left-[150%] transition-all duration-700 ease-in-out" />
+                </div>
+
                 {/* Big quote icon decoration */}
                 <Quotes
-                  className="absolute top-4 right-5 w-10 h-10 text-slate-100 group-hover:text-amber-100 transition-colors duration-300"
+                  className="absolute top-4 right-5 w-10 h-10 transition-all duration-500 group-hover:scale-110"
                   weight="fill"
+                  style={{ color: "color-mix(in srgb, var(--t-accent) 15%, #f1f5f9)" }}
                 />
 
                 {/* Stars */}
@@ -234,26 +262,28 @@ export default function WhyUsSection({
                   {Array.from({ length: t.stars }).map((_, i) => (
                     <Star
                       key={i}
-                      className="w-4 h-4 text-amber-400"
+                      className="w-4 h-4"
                       weight="fill"
+                      style={{ color: "var(--t-accent)" }}
                     />
                   ))}
                 </div>
 
                 {/* Comment */}
-                <p className="text-gray-600 text-[14px] leading-relaxed mb-6 flex-1 italic">
+                <p className="text-gray-600 text-[14px] leading-relaxed mb-6 flex-1 italic relative z-10">
                   &ldquo;{t.comment}&rdquo;
                 </p>
 
                 {/* Author */}
-                <div className="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100">
+                <div className="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100 relative z-10">
                   <div
-                    className={`w-10 h-10 rounded-full ${colorClass} flex items-center justify-center text-white font-bold text-sm shrink-0`}
+                    className={`w-10 h-10 ${colorClass} flex items-center justify-center text-white font-bold text-sm shrink-0`}
+                    style={{ borderRadius: "calc(var(--t-radius, 1rem) * 0.8)" }}
                   >
                     {initial}
                   </div>
                   <div>
-                    <p className="text-[#0A274E] font-bold text-[15px] leading-none mb-1">
+                    <p className="font-bold text-[15px] leading-none mb-1" style={{ color: "var(--t-primary)" }}>
                       {t.name}
                     </p>
                     <p className="text-gray-400 text-[12px]">
@@ -273,7 +303,8 @@ export default function WhyUsSection({
               onClick={() => handlePageChange(Math.max(0, activePage - 1))}
               disabled={activePage === 0}
               aria-label="Previous"
-              className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#0A274E] hover:border-[#0A274E] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
+              className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md hover:border-tp cursor-pointer"
+              style={{ color: "var(--t-primary)" }}
             >
               <CaretLeft className="w-4 h-4" weight="bold" />
             </button>
@@ -284,11 +315,11 @@ export default function WhyUsSection({
                   key={i}
                   onClick={() => handlePageChange(i)}
                   aria-label={`Page ${i + 1}`}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    i === activePage
-                      ? "bg-[#0A274E] w-8"
-                      : "bg-gray-300 w-2 hover:bg-gray-400"
-                  }`}
+                  className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                  style={{
+                    backgroundColor: i === activePage ? "var(--t-primary)" : "#d1d5db",
+                    width: i === activePage ? "2rem" : "0.5rem",
+                  }}
                 />
               ))}
             </div>
@@ -299,7 +330,8 @@ export default function WhyUsSection({
               }
               disabled={activePage >= totalPages - 1}
               aria-label="Next"
-              className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#0A274E] hover:border-[#0A274E] disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md cursor-pointer"
+              className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-md hover:border-tp cursor-pointer"
+              style={{ color: "var(--t-primary)" }}
             >
               <CaretRight className="w-4 h-4" weight="bold" />
             </button>

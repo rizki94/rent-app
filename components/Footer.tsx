@@ -55,7 +55,7 @@ export default function Footer({ config }: FooterProps) {
   return (
     <footer id="contact" className="w-full">
       {/* Main footer body */}
-      <div className="bg-[#0A274E] text-white pt-20 pb-10 px-4 sm:px-6 lg:px-8">
+      <div className="text-white pt-20 pb-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: 'var(--t-footer-bg)', color: 'var(--t-footer-text)' }}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
             {/* Brand column */}
@@ -207,7 +207,8 @@ export default function Footer({ config }: FooterProps) {
               href={`https://wa.me/${waPhone}?text=Halo%20Adhitama89!%20Saya%20ingin%20booking%20kendaraan`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-[#0A274E] font-bold text-[13px] px-5 py-2.5 rounded-full transition-all hover:shadow-lg"
+              className="flex items-center gap-2 font-bold text-[13px] px-5 py-2.5 rounded-full transition-all hover:shadow-lg"
+              style={{ background: 'var(--t-accent)', color: 'var(--t-accent-fg)' }}
             >
               <WhatsappLogo className="w-4 h-4" weight="fill" />
               Booking Sekarang

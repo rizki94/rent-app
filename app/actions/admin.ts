@@ -71,6 +71,7 @@ export async function updateWebConfigAction(formData: FormData) {
   const tiktokAccount = formData.get("tiktokAccount") as string;
   const instagramAccount = formData.get("instagramAccount") as string;
   const mapPinPoint = formData.get("mapPinPoint") as string;
+  const theme = (formData.get("theme") as string) || "navy_gold";
 
   try {
     if (idStr) {
@@ -81,6 +82,7 @@ export async function updateWebConfigAction(formData: FormData) {
         tiktokAccount,
         instagramAccount,
         mapPinPoint,
+        theme,
         updatedAt: new Date(),
       }).where(eq(webConfig.id, id));
     } else {
@@ -90,6 +92,7 @@ export async function updateWebConfigAction(formData: FormData) {
         tiktokAccount,
         instagramAccount,
         mapPinPoint,
+        theme,
       });
     }
 

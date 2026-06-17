@@ -88,7 +88,7 @@ export default function Header({ phone }: { phone?: string | null }) {
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`relative text-[14px] font-medium transition-colors duration-200 py-1 group ${
                   isScrolled
-                    ? "text-[#0A274E] hover:text-amber-500"
+                    ? "text-theme-primary hover:text-theme-accent"
                     : "text-white/90 hover:text-white"
                 }`}
               >
@@ -104,7 +104,8 @@ export default function Header({ phone }: { phone?: string | null }) {
               href={`https://wa.me/${phone || "6281234567890"}?text=Halo,%20saya%20ingin%20menyewa%20mobil`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 sm:gap-2 bg-[#0A274E] hover:bg-[#0d336a] text-white font-bold text-[10px] sm:text-[13px] md:text-[14px] px-2.5 sm:px-6 py-1.5 sm:py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+              className="flex items-center gap-1 sm:gap-2 text-white font-bold text-[10px] sm:text-[13px] md:text-[14px] px-2.5 sm:px-6 py-1.5 sm:py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+              style={{ backgroundColor: 'var(--t-primary)' }}
             >
               <WhatsappLogo
                 className="w-3.5 h-3.5 sm:w-4 sm:h-4"
@@ -117,7 +118,7 @@ export default function Header({ phone }: { phone?: string | null }) {
             <label
               htmlFor="mobile-menu-checkbox"
               id="mobile-menu-toggle"
-              className="md:hidden w-12 h-12 flex items-center justify-center rounded-xl transition-colors text-[#0A274E] hover:bg-slate-100 relative z-[60] cursor-pointer"
+              className="md:hidden w-12 h-12 flex items-center justify-center rounded-xl transition-colors text-theme-primary hover:bg-slate-100 relative z-[60] cursor-pointer"
               aria-label="Toggle menu"
             >
               <List
@@ -141,7 +142,7 @@ export default function Header({ phone }: { phone?: string | null }) {
               key={link.label}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="px-4 py-3 text-[15px] font-medium rounded-xl text-[#0A274E] hover:bg-slate-50 hover:text-amber-500 transition-all"
+              className="px-4 py-3 text-[15px] font-medium rounded-xl text-theme-primary hover:bg-slate-50 hover:text-theme-accent transition-all"
             >
               {link.label}
             </a>
@@ -151,7 +152,8 @@ export default function Header({ phone }: { phone?: string | null }) {
               href={`https://wa.me/${phone || "6281234567890"}?text=Halo,%20saya%20ingin%20menyewa%20mobil`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full text-[15px] font-semibold px-6 py-3.5 rounded-full bg-[#0A274E] hover:bg-[#0d336a] text-white transition-all"
+              className="flex items-center justify-center gap-2 w-full text-[15px] font-semibold px-6 py-3.5 rounded-full text-white transition-all"
+              style={{ backgroundColor: 'var(--t-primary)' }}
             >
               <WhatsappLogo className="w-4 h-4" weight="fill" />
               Hubungi Admin
