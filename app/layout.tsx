@@ -17,18 +17,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Adhitama89 | Sewa & Rental Mobil Bandung Lepas Kunci Murah Premium",
   description:
-    "Rental mobil Bandung terpercaya dengan armada premium terlengkap (Avanza, Innova, CRV). Sewa mobil lepas kunci atau dengan driver ramah 24/7. Hubungi Adhitama89 sekarang!",
+    "Rental mobil Bandung terpercaya dengan armada premium terlengkap (Avanza, Innova, Brio, Raize). Sewa mobil lepas kunci atau dengan driver ramah 24/7. Hubungi Adhitama89 sekarang!",
   keywords: [
     "sewa mobil bandung",
     "rental mobil bandung",
     "sewa mobil lepas kunci bandung",
-    "rental alphard bandung",
+    "rental raize bandung",
     "sewa avanza bandung",
     "rental mobil murah bandung",
     "sewa mobil dengan supir bandung",
     "sewa innova bandung",
     "rental innova bandung",
-    "sewa crv bandung",
+    "sewa brio bandung",
     "rent car bandung",
     "sewa mobil bandung murah",
     "adhitama89",
